@@ -10,8 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef BUREAUCRAT_HPP
+# define BUREAUCRAT_HPP
+
 #include <iostream>
 #include <exception>
+#include <string>
 
 class Bureaucrat{
 
@@ -55,3 +59,5 @@ class Bureaucrat{
 
 //sobrecarga del operador de insersion (<<)
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& obj);
+
+#endif

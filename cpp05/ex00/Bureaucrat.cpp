@@ -16,9 +16,9 @@
 Bureaucrat::Bureaucrat() : _name("Default"), _grade(42) {}
 Bureaucrat::Bureaucrat(const std::string name, int grade) : _name(name), _grade(grade){
 	if (_grade < 1)
-		throw GradeTooLowException();
+		throw GradeTooHighException();  // Grado 1 es el más alto, <1 es demasiado alto
 	if (_grade > 150)
-		throw GradeTooHighException();
+		throw GradeTooLowException();   // Grado 150 es el más bajo, >150 es demasiado bajo
 }
 
 //implementar cualquier intento de crear un Bureaucrat  con un grado invalido
@@ -46,19 +46,19 @@ int Bureaucrat::getGrade() const { return _grade; }
 
 //creamos nuestras exepciones !!! TODO:
 void Bureaucrat::incrementGrade(){
-	if (_grade == 1)
-		throw GradeTooHighException();
+	if (_grade <= 1)
+		throw GradeTooHighException();  // Si ya está en grado 1 (máximo), no puede subir más
 	else
-		_grade -= 1;
+		_grade -= 1;  // Decrementar el número = subir de grado
 }
 
 
 
 void Bureaucrat::decrementGrade(){
-	if (_grade == 150)
-		throw GradeTooLowException();
+	if (_grade >= 150)
+		throw GradeTooLowException();   // Si ya está en grado 150 (mínimo), no puede bajar más
 	else 
-		_grade += 1;
+		_grade += 1;  // Incrementar el número = bajar de grado
 }
 
 
