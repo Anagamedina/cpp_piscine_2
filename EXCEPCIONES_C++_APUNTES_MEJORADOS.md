@@ -214,3 +214,291 @@ int main() {
 
 ---
 
+## 🔍 MANEJO DE ERRORES EN PROGRAMACIÓN
+
+### 📋 Tipos de errores
+
+#### 1. **Errores sintácticos**
+- Errores de **gramática** del lenguaje
+- **Ejemplo**: `int x = ;` (falta valor)
+- **Solución**: El compilador los detecta y **no permite compilar**
+
+#### 2. **Errores semánticos**
+- El código **compila** pero hace algo diferente a lo esperado
+- **Ejemplo**: `if (x = 5)` en lugar de `if (x == 5)`
+- **Solución**: Debugging y testing cuidadoso
+
+#### 3. **Errores externos**
+- Problemas **fuera del control** del programa
+- **Ejemplo**: Archivo no encontrado, conexión de red perdida, memoria insuficiente
+- **Solución**: Manejo de excepciones (¡esto es donde brillan!)
+
+---
+
+## 🎯 ESTRATEGIAS PARA MANEJAR ERRORES
+
+### **Primera estrategia: Manejar el error donde se produce**
+
+```cpp
+void leerArchivo(const std::string& nombre) {
+    std::ifstream archivo(nombre);
+    if (!archivo.is_open()) {
+        std::cerr << "Error: No se puede abrir " << nombre << std::endl;
+        return; // Salir de la función sin afectar el resto del programa
+    }
+    // Continuar con la lectura...
+}
+```
+
+**Ventajas:**
+- Error **localizado** - no afecta otras partes
+- **Fácil de debuggear**
+- Usar `std::cerr` para errores (no se almacena en buffer)
+
+**Desventajas:**
+- **No siempre es posible** solucionar el error localmente
+- **Información limitada** para el llamador
+
+### **Segunda estrategia: Devolver el error al llamador**
+
+```cpp
+int dividir(int a, int b) {
+    if (b == 0) {
+        return -1; // Valor especial que indica error
+    }
+    return a / b;
+}
+
+// Problema: ¿Qué pasa si el resultado legítimo es -1?
+int resultado = dividir(-10, 10); // ¿Es -1 un error o el resultado correcto?
+```
+
+**Problemas de esta estrategia:**
+- **Inconsistencias**: ¿Qué valor usar para indicar error?
+- **Confusión**: ¿Es -1 un error o un resultado válido?
+- **Limitaciones**: No todas las funciones tienen valores "imposibles"
+
+### **Tercera estrategia: Detener la ejecución del programa**
+
+```cpp
+void funcionCritica() {
+    if (error_critico) {
+        std::cerr << "Error crítico! Terminando programa..." << std::endl;
+        exit(1); // Termina TODO el programa
+    }
+}
+```
+
+**Usar solo cuando:**
+- El error es **irreparable**
+- Continuar sería **peligroso**
+- **Último recurso**
+
+### **Cuarta estrategia: Lanzar una excepción** ⭐
+
+```cpp
+int dividir(int a, int b) {
+    if (b == 0) {
+        throw std::invalid_argument("División por cero");
+    }
+    return a / b;
+}
+
+int main() {
+    try {
+        int resultado = dividir(10, 0);
+        std::cout << "Resultado: " << resultado << std::endl;
+    }
+    catch (const std::exception& e) {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
+}
+```
+
+**Ventajas:**
+- **Separación clara** entre flujo normal y manejo de errores
+- **Propagación automática** por la pila de llamadas
+- **Flexibilidad** para manejar errores donde sea más conveniente
+
+---
+
+## 🔄 PROPAGACIÓN DE PILA (STACK UNWINDING)
+
+### ¿Qué es la propagación de pila?
+
+Cuando se lanza una excepción, C++ **busca hacia arriba** en la pila de llamadas hasta encontrar un `catch` que pueda manejar la excepción.
+
+```cpp
+void funcionC() {
+    throw std::runtime_error("Error en C");
+}
+
+void funcionB() {
+    std::cout << "Entrando a B" << std::endl;
+    funcionC();
+    std::cout << "Saliendo de B" << std::endl; // ❌ NUNCA se ejecuta
+}
+
+void funcionA() {
+    std::cout << "Entrando a A" << std::endl;
+    funcionB();
+    std::cout << "Saliendo de A" << std::endl; // ❌ NUNCA se ejecuta
+}
+
+int main() {
+    try {
+        funcionA();
+    }
+    catch (const std::exception& e) {
+        std::cout << "Capturado en main: " << e.what() << std::endl;
+    }
+}
+```
+
+**Salida:**
+```
+Entrando a A
+Entrando a B
+Capturado en main: Error en C
+```
+
+### ¿Qué pasa durante la propagación?
+
+1. **Se destruyen objetos locales** en cada función que se abandona
+2. **Se llaman destructores** automáticamente (RAII)
+3. **Se busca el `catch` apropiado** en cada nivel
+4. **Se transfiere el control** al primer `catch` encontrado
+
+### Ejemplo con objetos que se destruyen:
+
+```cpp
+class MiClase {
+public:
+    MiClase(const std::string& nombre) : _nombre(nombre) {
+        std::cout << "Constructor: " << _nombre << std::endl;
+    }
+    ~MiClase() {
+        std::cout << "Destructor: " << _nombre << std::endl;
+    }
+private:
+    std::string _nombre;
+};
+
+void funcionConObjetos() {
+    MiClase obj1("Objeto 1");
+    MiClase obj2("Objeto 2");
+    throw std::runtime_error("Error!");
+    // obj1 y obj2 se destruyen automáticamente antes de saltar al catch
+}
+
+int main() {
+    try {
+        funcionConObjetos();
+    }
+    catch (const std::exception& e) {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
+}
+```
+
+**Salida:**
+```
+Constructor: Objeto 1
+Constructor: Objeto 2
+Destructor: Objeto 2
+Destructor: Objeto 1
+Error: Error!
+```
+
+---
+
+## 📊 EXCEPCIONES POR TIPO DE DATO
+
+### **Excepciones de tipos fundamentales** (capturadas por valor)
+
+```cpp
+try {
+    throw 42;        // int
+    throw 3.14;      // double
+    throw 'A';       // char
+}
+catch (int valor) {
+    std::cout << "Error entero: " << valor << std::endl;
+}
+catch (double valor) {
+    std::cout << "Error double: " << valor << std::endl;
+}
+catch (char valor) {
+    std::cout << "Error char: " << valor << std::endl;
+}
+```
+
+**¿Por qué por valor?**
+- Los tipos fundamentales son **pequeños** (int, char, double)
+- **No hay destructores** que llamar
+- **Copiar es barato** y rápido
+
+### **Excepciones de tipos no fundamentales** (capturadas por referencia constante)
+
+```cpp
+try {
+    throw std::string("Error de string");
+    throw std::runtime_error("Error de runtime");
+}
+catch (const std::string& e) {
+    std::cout << "Error: " << e << std::endl;
+}
+catch (const std::exception& e) {
+    std::cout << "Error: " << e.what() << std::endl;
+}
+```
+
+**¿Por qué por referencia constante?**
+- **Evita copias costosas** (especialmente con objetos grandes)
+- **Preserva la herencia** - puedes capturar clases derivadas
+- **Mantiene la semántica** original del objeto
+- **No hay slicing** (corte de información de clases derivadas)
+
+### **Ejemplo de slicing problemático:**
+
+```cpp
+class BaseExcepcion {
+public:
+    virtual const char* que() const { return "Base"; }
+};
+
+class DerivadaExcepcion : public BaseExcepcion {
+public:
+    virtual const char* que() const override { return "Derivada"; }
+};
+
+// ❌ MAL - captura por valor causa slicing
+try {
+    throw DerivadaExcepcion();
+}
+catch (BaseExcepcion e) {  // ¡Slicing! Se pierde información de la clase derivada
+    std::cout << e.que() << std::endl; // Imprime "Base" en lugar de "Derivada"
+}
+
+// ✅ BIEN - captura por referencia constante
+try {
+    throw DerivadaExcepcion();
+}
+catch (const BaseExcepcion& e) {  // Sin slicing, mantiene toda la información
+    std::cout << e.que() << std::endl; // Imprime "Derivada" correctamente
+}
+```
+
+---
+
+## 🎯 RESUMEN FINAL DE MEJORES PRÁCTICAS
+
+1. **Usa excepciones para errores excepcionales**, no para control de flujo normal
+2. **Captura tipos fundamentales por valor**: `catch (int e)`
+3. **Captura tipos no fundamentales por referencia constante**: `catch (const std::exception& e)`
+4. **Usa `std::cerr` para mensajes de error** (no se almacena en buffer)
+5. **Diseña tus excepciones** para que hereden de `std::exception`
+6. **Documenta qué excepciones** puede lanzar cada función
+
+---
+
