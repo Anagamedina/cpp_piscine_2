@@ -21,30 +21,26 @@ class Bureaucrat{
 
   private:
 	const std::string	_name;
-	int					_grade; //del 1 al 150
+	int					_grade; // Grade 1-150 (1=highest, 150=lowest)
 
   public:
-	//constructores
+	// Constructors
 	Bureaucrat();
 	Bureaucrat(const std::string name, int grade);
 	Bureaucrat(const Bureaucrat& obj);
 	Bureaucrat& operator=(const Bureaucrat& obj);
-	//destructores 
+	// Destructor 
 	virtual	~Bureaucrat();
 	
-	//setter y getters
+	// Getters
 	const std::string& getName() const;
 	int getGrade() const;
 
-	//funciones miembro para incrementar o decrementar el grado del burocrata
+	// Grade management (1=highest, 150=lowest)
 	void incrementGrade();
 	void decrementGrade();
 
-	//clases de excepciones
-	//TODO: 
-	//constructor que toma un mensaje y lo almacena 
-	//explicit MiExepcion(const std::string& msg) : mensaje(mg){}
-	//virtual const char* what() const noexcept override{return mensaje.c_str();}
+	// Exceptions
 	class GradeTooHighException : public std::exception{
 	  public:
 		virtual const char* what() const throw();
@@ -57,7 +53,7 @@ class Bureaucrat{
 
 };
 
-//sobrecarga del operador de insersion (<<)
+// Output operator
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& obj);
 
 #endif

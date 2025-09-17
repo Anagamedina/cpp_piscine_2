@@ -12,17 +12,16 @@
 
 #include "Bureaucrat.hpp"
 
-//constructores 
+// Constructors 
 Bureaucrat::Bureaucrat() : _name("Default"), _grade(42) {}
 Bureaucrat::Bureaucrat(const std::string name, int grade) : _name(name), _grade(grade){
 	if (_grade < 1)
-		throw GradeTooHighException();  // Grado 1 es el más alto, <1 es demasiado alto
+		throw GradeTooHighException();  // Grade 1 is highest, <1 is too high
 	if (_grade > 150)
-		throw GradeTooLowException();   // Grado 150 es el más bajo, >150 es demasiado bajo
+		throw GradeTooLowException();   // Grade 150 is lowest, >150 is too low
 }
 
-//implementar cualquier intento de crear un Bureaucrat  con un grado invalido
-//debe lanzar una excepcion 
+// Invalid grade throws exception 
 
 Bureaucrat::Bureaucrat(const Bureaucrat& obj) : _name(obj._name), _grade(obj._grade){}
 
@@ -34,35 +33,35 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& obj){
 	return (*this);
 }
  
-//destructor
+// Destructor
 Bureaucrat::~Bureaucrat(){}
 
-//getter y setters
+// Getters
 const std::string& Bureaucrat::getName() const { return _name; }
 int Bureaucrat::getGrade() const { return _grade; }
 
 
 
 
-//creamos nuestras exepciones !!! TODO:
+// Grade management methods
 void Bureaucrat::incrementGrade(){
 	if (_grade <= 1)
-		throw GradeTooHighException();  // Si ya está en grado 1 (máximo), no puede subir más
+		throw GradeTooHighException();  // Already at highest grade (1)
 	else
-		_grade -= 1;  // Decrementar el número = subir de grado
+		_grade -= 1;  // Decrease number = increase grade level
 }
 
 
 
 void Bureaucrat::decrementGrade(){
 	if (_grade >= 150)
-		throw GradeTooLowException();   // Si ya está en grado 150 (mínimo), no puede bajar más
+		throw GradeTooLowException();   // Already at lowest grade (150)
 	else 
-		_grade += 1;  // Incrementar el número = bajar de grado
+		_grade += 1;  // Increase number = decrease grade level
 }
 
 
-//metodo what 
+// Exception messages 
 
 const char* Bureaucrat::GradeTooHighException::what() const throw(){
 	return "Grade is too high!";
@@ -72,7 +71,7 @@ const char* Bureaucrat::GradeTooLowException::what() const throw(){
 	return "Grade is too low!";
 }
 
-//sobrecarga del operator de insertion
+// Output operator
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& obj){
 	out<< obj.getName() << ", Bureaucrat grade " << obj.getGrade() << "." << std::endl;

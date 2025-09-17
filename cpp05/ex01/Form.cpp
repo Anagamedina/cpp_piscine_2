@@ -12,18 +12,17 @@
 
 #include "Form.hpp"
 
-//cosntructores 
+// Constructors 
 Form::Form() : _name("Default"), _Signed(false), _gradeToSign(42), _gradeToExecute(42){}
 
 Form::Form(const std::string name, int gradetosign, int gradetoexecute) :  _name(name), _Signed(false), _gradeToSign(gradetosign), _gradeToExecute(gradetoexecute) { 
 	if (_gradeToSign < 1 || _gradeToExecute < 1)
-		throw GradeTooHighException();
+		throw GradeTooHighException();  // Grade 1 is highest
 	if (_gradeToSign > 150 || _gradeToExecute > 150)
-		throw GradeTooLowException();
+		throw GradeTooLowException();   // Grade 150 is lowest
 }
 
-Form::Form(const Form& obj): _name(obj._name), _gradeToSign(obj._gradeToSign), _gradeToExecute(obj._gradeToExecute){
-	_isSigned = obj._Signed;
+Form::Form(const Form& obj): _name(obj._name), _Signed(obj._Signed), _gradeToSign(obj._gradeToSign), _gradeToExecute(obj._gradeToExecute){
 }
 
 Form& Form::operator=(const Form& obj){
@@ -32,16 +31,16 @@ Form& Form::operator=(const Form& obj){
 	}
 	return *this;
 }
-//destructor
+// Destructor
 Form::~Form(){}
 
 
-//getters
+// Getters
 const std::string& Form::getName() const { 
 	return _name;
 }
 
-bool Form::getIsSigned() const {
+bool Form::getSigned() const {
 	return _Signed;
 }
 
@@ -50,15 +49,14 @@ int Form::getGradeToSign() const {
 }
 
 int Form::getGradeToExecute() const { 
-	return _gradeToSign;
+	return _gradeToExecute;
 }
 
 
-//Excepcions : cambiara el estado del formulario y si la nota es demasiado baja
-//lanzara una excepcion!!! ojooo!
+// Sign form if bureaucrat grade is sufficient
 void Form::beSigned(const Bureaucrat& b){
 	if (b.getGrade() <= _gradeToSign)
-		_isSigned = true;
+		_Signed = true;
 	else
 		throw GradeTooLowException();
 }
@@ -71,7 +69,7 @@ const char* Form::GradeTooLowException::what() const throw(){
 	return "Grade is too Low";
 }
 
-//insertion operator overload
+// Output operator
 
 std::ostream& operator<<(std::ostream& out, const Form& obj) { 
 	out << "Form: " << obj.getName()

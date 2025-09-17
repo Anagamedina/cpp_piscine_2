@@ -26,22 +26,21 @@ class Form {
 	public:
 		Form();
 		Form(const std::string name, int gradetosign, int gradetoexecute);
-		Form(const& obj);
+		Form(const Form& obj);
 		Form& operator=(const Form& obj);
-		//destructor
+		// Destructor
 		virtual ~Form();
 
-		//gettter setter
+		// Getters
 		const std::string& getName() const;
 		bool getSigned() const;
 		int	getGradeToSign() const;
 		int getGradeToExecute() const;
 
-		//cambiara el estado del formulario a firmado si la nota del burocrata
-		//es lo suficiente alta es decir menor o igual que la requerida. 
-		void besigned(const Bureaucrat& b);
+		// Sign form if bureaucrat has sufficient grade 
+		void beSigned(const Bureaucrat& b);
 
-		//clases de excepciones
+		// Exceptions
 		class GradeTooHighException : public std::exception{
 			public:
 				virtual const char* what() const throw();

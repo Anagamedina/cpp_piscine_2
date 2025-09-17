@@ -17,7 +17,7 @@
 int main(){
 	std::cout << "=== DEMOSTRACIÓN DEL BUREAUCRAT ===" << std::endl << std::endl;
 	
-	// Test 1: Crear un Bureaucrat válido
+	// Test 1: Create valid bureaucrat
 	std::cout << "1. Creando un Bureaucrat válido:" << std::endl;
 	try {
 		Bureaucrat a("Juan", 42);
@@ -26,29 +26,29 @@ int main(){
 		std::cout << "Error: " << e.what() << std::endl;
 	}
 	
-	// Test 2: Incrementar grado (subir en la jerarquía)
+	// Test 2: Increment grade (move up hierarchy)
 	std::cout << "\n2. Incrementando grado (subiendo en jerarquía):" << std::endl;
 	try {
 		Bureaucrat b("María", 5);
 		std::cout << "Antes: " << b.getName() << " tiene grado " << b.getGrade() << std::endl;
-		b.incrementGrade(); // De 5 a 4
+		b.incrementGrade(); // From 5 to 4
 		std::cout << "Después: " << b.getName() << " tiene grado " << b.getGrade() << std::endl;
 	} catch (const std::exception& e) {
 		std::cout << "Error: " << e.what() << std::endl;
 	}
 	
-	// Test 3: Decrementar grado (bajar en la jerarquía)
+	// Test 3: Decrement grade (move down hierarchy)
 	std::cout << "\n3. Decrementando grado (bajando en jerarquía):" << std::endl;
 	try {
 		Bureaucrat c("Pedro", 149);
 		std::cout << "Antes: " << c.getName() << " tiene grado " << c.getGrade() << std::endl;
-		c.decrementGrade(); // De 149 a 150
+		c.decrementGrade(); // From 149 to 150
 		std::cout << "Después: " << c.getName() << " tiene grado " << c.getGrade() << std::endl;
 	} catch (const std::exception& e) {
 		std::cout << "Error: " << e.what() << std::endl;
 	}
 	
-	// Test 4: Intentar crear un Bureaucrat con grado inválido (muy alto)
+	// Test 4: Try to create bureaucrat with invalid grade (too high)
 	std::cout << "\n4. Intentando crear Bureaucrat con grado muy alto (0):" << std::endl;
 	try {
 		Bureaucrat d("Ana", 0);
@@ -57,7 +57,7 @@ int main(){
 		std::cout << "Error capturado: " << e.what() << std::endl;
 	}
 	
-	// Test 5: Intentar crear un Bureaucrat con grado inválido (muy bajo)
+	// Test 5: Try to create bureaucrat with invalid grade (too low)
 	std::cout << "\n5. Intentando crear Bureaucrat con grado muy bajo (151):" << std::endl;
 	try {
 		Bureaucrat e("Luis", 151);
@@ -66,29 +66,29 @@ int main(){
 		std::cout << "Error capturado: " << e.what() << std::endl;
 	}
 	
-	// Test 6: Intentar incrementar cuando ya está en el grado más alto
+	// Test 6: Try to increment when already at highest grade
 	std::cout << "\n6. Intentando incrementar grado cuando ya está en el máximo (1):" << std::endl;
 	try {
 		Bureaucrat f("Jefe", 1);
 		std::cout << "Antes: " << f;
-		f.incrementGrade(); // Esto debería lanzar excepción
+		f.incrementGrade(); // This should throw exception
 		std::cout << "Después: " << f;
 	} catch (const std::exception& e) {
 		std::cout << "Error capturado: " << e.what() << std::endl;
 	}
 	
-	// Test 7: Intentar decrementar cuando ya está en el grado más bajo
+	// Test 7: Try to decrement when already at lowest grade
 	std::cout << "\n7. Intentando decrementar grado cuando ya está en el mínimo (150):" << std::endl;
 	try {
 		Bureaucrat g("Novato", 150);
 		std::cout << "Antes: " << g;
-		g.decrementGrade(); // Esto debería lanzar excepción
+		g.decrementGrade(); // This should throw exception
 		std::cout << "Después: " << g;
 	} catch (const std::exception& e) {
 		std::cout << "Error capturado: " << e.what() << std::endl;
 	}
 	
-	// Test 8: Copia de Bureaucrat
+	// Test 8: Copy bureaucrat
 	std::cout << "\n8. Copiando un Bureaucrat:" << std::endl;
 	try {
 		Bureaucrat original("Original", 25);
