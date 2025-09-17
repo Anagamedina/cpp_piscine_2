@@ -1,8 +1,4 @@
-# Comentarios Mejorados - Ex01
 
-## 📝 Resumen de Cambios
-
-He mejorado todos los comentarios en tu código, haciéndolos más **sencillos**, **prácticos** y **en inglés** para seguir las convenciones estándar de programación.
 
 ## 🔄 Cambios Realizados
 
@@ -165,18 +161,3 @@ Bureaucrat invalid("Invalid Bureaucrat", 200); // Grade out of range
 // Already at highest grade (1)
 // Decrease number = increase grade level
 ```
-
-## 📊 Estadísticas
-
-- **Comentarios eliminados**: ~15 comentarios largos/confusos
-- **Comentarios mejorados**: ~25 comentarios
-- **Líneas de código**: Reducidas en ~20 líneas
-- **Legibilidad**: Significativamente mejorada
-
-## ✅ Verificación
-
-El código compila y funciona perfectamente después de todos los cambios:
-- ✅ Compilación exitosa
-- ✅ Todos los tests funcionan
-- ✅ Funcionalidad preservada
-- ✅ Código más limpio y profesional
