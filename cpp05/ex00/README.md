@@ -527,5 +527,3 @@ make
 ```
 
 ---
-
-*Estos apuntes te ayudarán a entender mejor el sistema de excepciones de C++ y aplicarlo correctamente en tus proyectos.*
