@@ -183,7 +183,7 @@ int main() {
 
 ---
 
-## 🎯 RESUMEN TÉCNICO PARA ENTREVISTAS
+## 🎯 RESUMEN TÉCNICO:
 
 > "C++ implementa excepciones con un modelo zero-cost: el compilador genera tablas de excepción y el runtime usa `__cxa_throw` para iniciar el unwinding. Durante el stack unwinding se invocan los destructores de los objetos automáticos, y si se encuentra un `catch` compatible según las tablas, el control se transfiere a él; de lo contrario se invoca `std::terminate()`."
 
@@ -214,4 +214,3 @@ int main() {
 
 ---
 
-*Estos apuntes te ayudarán a entender mejor el sistema de excepciones de C++ y aplicarlo correctamente en tus proyectos.*
