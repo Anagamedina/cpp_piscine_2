@@ -17,6 +17,8 @@
 #include <exception>
 #include <string>
 
+class Form;
+
 class Bureaucrat{
 
   private:
@@ -39,6 +41,10 @@ class Bureaucrat{
 	// Grade management (1=highest, 150=lowest)
 	void incrementGrade();
 	void decrementGrade();
+
+	// Form management
+	void signForm(Form& form);
+	void executeForm(const Form& form);
 
 	// Exceptions
 	class GradeTooHighException : public std::exception{

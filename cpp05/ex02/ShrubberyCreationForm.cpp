@@ -11,52 +11,52 @@
 /* ************************************************************************** */
 
 #include "ShrubberyCreationForm.hpp"
+#include "Bureaucrat.hpp"
+#include <fstream>
 
-//constructors
-ShrubberyCreationForm::ShrubberyCreationForm() : AForm("Default", 145, 137), _target("Default"){}
+// Constructors
+ShrubberyCreationForm::ShrubberyCreationForm() : Form("Default", 145, 137), _target("Default"){}
 
-ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target) : AForm("Shrubbery creation", 145, 137), _target(target){}
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target) : Form("Shrubbery creation", 145, 137), _target(target){}
 
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& obj) : AForm(obj),  _target(obj._target) {}
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& obj) : Form(obj),  _target(obj._target) {}
 
 ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& obj){
 	if (this != &obj){
-		AForm::operator=(obj);
+		Form::operator=(obj);
 		_target = obj._target;
 	}
 	return *this;
 }
 
-//destructors
-
+// Destructor
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
 void ShrubberyCreationForm::execute(const Bureaucrat& executor) const {
 	if (!getSigned())
-		throw FormException();
+		throw FormException();  // Form must be signed to execute
 	if (executor.getGrade() > getGradeToExecute())
-		throw FormException();
-		throw GradeTooLowException();
-	//creamos en archivooo con ofstream class 
+		throw GradeTooLowException();  // Bureaucrat grade too low to execute
+	
+	// Create file with ASCII tree art
 	std::ofstream file((_target + "_shrubbery").c_str());
 	if (file.is_open()) { 
-		    file << "       &&& &&  & &&\n";
-			file << "   && &\\/&\\|& ()|/ @, &&\n";
-			file << "   &\\/(/&/&||/& /_/)_&/_&\n";
-			file << " &() &\\/&|()|/&\\/ '%\" & ()\n";
-			file << " &_\\_&&_\\ |& |&&/&__%_/_& &&\n";
-			file << "&&   && & &| &| /& & % ()& /&&\n";
-			file << " ()&_---()&\\&\\|&&-&&--%---()~\n";
-			file << "     &&     \\|||\n";
-			file << "             |||\n";
-			file << "             |||\n";
-			file << "             |||\n";
-			file << "       , -=-~  .-^- _\n";
-			file.close();	
-		std::cout << "The file" << _target << "_shubbery" << std::endl;
+		file << "       &&& &&  & &&\n";
+		file << "   && &\\/&\\|& ()|/ @, &&\n";
+		file << "   &\\/(/&/&||/& /_/)_&/_&\n";
+		file << " &() &\\/&|()|/&\\/ '%\" & ()\n";
+		file << " &_\\_&&_\\ |& |&&/&__%_/_& &&\n";
+		file << "&&   && & &| &| /& & % ()& /&&\n";
+		file << " ()&_---()&\\&\\|&&-&&--%---()~\n";
+		file << "     &&     \\|||\n";
+		file << "             |||\n";
+		file << "             |||\n";
+		file << "             |||\n";
+		file << "       , -=-~  .-^- _\n";
+		file.close();	
+		std::cout << "Shrubbery has been planted in " << _target << "_shrubbery" << std::endl;
 	}
 	else{
-		std::cerr << "Error: could not open file." << std::endl;
+		std::cerr << "Error: could not create shrubbery file." << std::endl;
 	}
-
 }

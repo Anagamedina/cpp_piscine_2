@@ -19,33 +19,38 @@
 #include "Form.hpp"
 
 int main(){
-	std::cout << "=== DEMOSTRACIÓN DEL FORM Y BUREAUCRAT ===" << std::endl << std::endl;
+	std::cout << "=== FORM AND BUREAUCRAT DEMONSTRATION ===" << std::endl << std::endl;
 	
 	try {
-		std::cout << "--- Test 1: Caso exitoso ---" << std::endl;
-		Form contract("Contrato de Trabajo", 10, 5);
-		Bureaucrat manager("Manager Bob", 8);
-
-
-		ShrubberyCreationForm	form1("my_space");
-		RobotomyRequestForm		form2("my_bath");
-		PresidentialPardonForm  form3("my_tree");
-
-		manager.signForm(form1);
-
-		manager.executeForm(form1);
-		std::cout << contract << std::endl;
-		std::cout << manager << std::endl;
+		std::cout << "--- Test 1: Successful case ---" << std::endl;
+		Bureaucrat highLevel("High Manager", 3);
+		Bureaucrat lowLevel("Low Clerk", 140);
 		
-		contract.beSigned(manager);
-		std::cout << "¡Formulario firmado exitosamente!" << std::endl;
-		std::cout << contract << std::endl;
+		// Create different forms
+		ShrubberyCreationForm shrubbery("garden");
+		RobotomyRequestForm robotomy("target");
+		PresidentialPardonForm pardon("criminal");
+		
+		std::cout << "\n--- Testing Shrubbery Creation Form ---" << std::endl;
+		highLevel.signForm(shrubbery);
+		highLevel.executeForm(shrubbery);
+		
+		std::cout << "\n--- Testing Robotomy Request Form ---" << std::endl;
+		highLevel.signForm(robotomy);
+		highLevel.executeForm(robotomy);
+		
+		std::cout << "\n--- Testing Presidential Pardon Form ---" << std::endl;
+		highLevel.signForm(pardon);
+		highLevel.executeForm(pardon);
+		
+		std::cout << "\n--- Testing with low-level bureaucrat ---" << std::endl;
+		lowLevel.signForm(shrubbery);
+		lowLevel.executeForm(shrubbery);
 		
 	} catch (const std::exception& e) {
 		std::cout << "Error: " << e.what() << std::endl;
 	}
 	
-	
-	std::cout << "\n=== FIN DE LA DEMOSTRACIÓN ===" << std::endl;
+	std::cout << "\n=== END OF DEMONSTRATION ===" << std::endl;
 	return 0;
 }

@@ -10,27 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef FORM_HPP
+# define FORM_HPP
+
 #include <iostream>
 #include <exception>
-#include "Bureaucrat.hpp"
+#include <string>
 
 class Bureaucrat;
 
-class AForm {
+class Form {
 	private:
 		const std::string   _name;
 		bool				_Signed;
 		const int			_gradeToSign;
 		const int			_gradeToExecute;
 		
-		AForm();
+		Form();
 
 	public:
-		AForm(const std::string name, int gradetosign, int gradetoexecute);
-		AForm(const AForm& obj);
-		AForm& operator=(const AForm& obj);
+		Form(const std::string name, int gradetosign, int gradetoexecute);
+		Form(const Form& obj);
+		Form& operator=(const Form& obj);
 		// Destructor
-		virtual ~AForm();
+		virtual ~Form();
 
 		// Getters
 		const std::string& getName() const;
@@ -68,7 +71,6 @@ class AForm {
 		};
 };
 
-std::ostream& operator<<(std::ostream& out, const AForm& obj);
+std::ostream& operator<<(std::ostream& out, const Form& obj);
 
-
-
+#endif

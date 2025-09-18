@@ -11,35 +11,43 @@
 /* ************************************************************************** */
 
 #include "RobotomyRequestForm.hpp"
+#include "Bureaucrat.hpp"
+#include <cstdlib>
+#include <ctime>
 
-RobotomyRequestForm::RobotomyRequestForm() : AForm("Default", 72, 45), _target("Default_target") { }
+// Constructors
+RobotomyRequestForm::RobotomyRequestForm() : Form("Default", 72, 45), _target("Default_target") { }
 
-RobotomyRequestForm::RobotomyRequestForm(const std::string& target) : AForm("Robotomy request", 72, 45), _target(target) {}
+RobotomyRequestForm::RobotomyRequestForm(const std::string& target) : Form("Robotomy request", 72, 45), _target(target) {}
 
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& obj) : AForm(obj), _target(obj._target){}
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& obj) : Form(obj), _target(obj._target){}
 
 RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& obj) { 
 	if (this != &obj) { 
-		AForm::operator=(obj);
+		Form::operator=(obj);
 		_target = obj._target;
 	}
 	return *this;
 }
 
+// Destructor
 RobotomyRequestForm::~RobotomyRequestForm() {}
 
 void RobotomyRequestForm::execute(const Bureaucrat& executor) const { 
 	if (!getSigned())
-		throw FormNotSignedExeption();
+		throw FormException();  // Form must be signed to execute
 	if (executor.getGrade() > getGradeToExecute())
-		throw GradeTooLowException();
-	//funcion especial
+		throw GradeTooLowException();  // Bureaucrat grade too low to execute
+	
+	// 50% chance of success
+	std::srand(std::time(0));  // Seed random number generator
 	if (std::rand() % 2 == 0) {
-		std::cout << "noiiiiseeeee..." << std::endl;
-		std::cout << "\"" << _target << "\" RObotomyyyy failed! \n" << std::endl;
+		std::cout << "Drilling noises... *BZZZZZZZZ*" << std::endl;
+		std::cout << _target << " has been successfully robotomized!" << std::endl;
 	}
-	else
-		std::cout << "\"" << _target << "\" robotomyyyy failed!\n" << std::endl;
+	else {
+		std::cout << "Robotomy failed for " << _target << std::endl;
+	}
 }
 
 
