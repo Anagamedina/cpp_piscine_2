@@ -1,0 +1,268 @@
+# DIAGRAMA UML - EJERCICIO EX02 (CPP05)
+
+## 📊 **DIAGRAMA DE CLASES COMPLETO**
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                                Bureaucrat                                      │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ - _name: const std::string                                                      │
+│ - _grade: int                                                                   │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ + Bureaucrat()                                                                  │
+│ + Bureaucrat(name: string, grade: int)                                          │
+│ + Bureaucrat(const Bureaucrat&)                                                 │
+│ + operator=(const Bureaucrat&): Bureaucrat&                                     │
+│ + ~Bureaucrat()                                                                 │
+│ + getName(): const string&                                                      │
+│ + getGrade(): int                                                               │
+│ + incrementGrade(): void                                                        │
+│ + decrementGrade(): void                                                        │
+│ + signForm(form: Form&): void                                                   │
+│ + executeForm(form: const Form&): void                                         │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ + GradeTooHighException: exception                                               │
+│ + GradeTooLowException: exception                                               │
+└─────────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    │ uses
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                                  Form                                           │
+│                              (Abstract Class)                                   │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ - _name: const std::string                                                      │
+│ - _Signed: bool                                                                 │
+│ - _gradeToSign: const int                                                        │
+│ - _gradeToExecute: const int                                                   │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ + Form(name: string, gradeToSign: int, gradeToExecute: int)                     │
+│ + Form(const Form&)                                                             │
+│ + operator=(const Form&): Form&                                                 │
+│ + ~Form()                                                                       │
+│ + getName(): const string&                                                      │
+│ + getSigned(): bool                                                             │
+│ + getGradeToSign(): int                                                         │
+│ + getGradeToExecute(): int                                                      │
+│ + beSigned(bureaucrat: const Bureaucrat&): void                                 │
+│ + execute(executor: const Bureaucrat&): void = 0  // Pure Virtual               │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ + GradeTooHighException: exception                                               │
+│ + GradeTooLowException: exception                                               │
+│ + FormException: exception                                                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    │ inherits from
+                                    │
+                    ┌───────────────┼───────────────┐
+                    │               │               │
+                    ▼               ▼               ▼
+┌─────────────────────────┐ ┌─────────────────────────┐ ┌─────────────────────────┐
+│ ShrubberyCreationForm  │ │ RobotomyRequestForm     │ │ PresidentialPardonForm  │
+├─────────────────────────┤ ├─────────────────────────┤ ├─────────────────────────┤
+│ - _target: string       │ │ - _target: string       │ │ - _target: string       │
+├─────────────────────────┤ ├─────────────────────────┤ ├─────────────────────────┤
+│ + ShrubberyCreationForm()│ │ + RobotomyRequestForm() │ │ + PresidentialPardonForm()│
+│ + ShrubberyCreationForm(│ │ + RobotomyRequestForm( │ │ + PresidentialPardonForm(│
+│   target: const string&)│ │   target: const string&)│ │   target: const string&)│
+│ + ShrubberyCreationForm(│ │ + RobotomyRequestForm( │ │ + PresidentialPardonForm(│
+│   const ShrubberyCreation│ │   const RobotomyRequest│ │   const PresidentialPardon│
+│   Form&)                │ │   Form&)               │ │   Form&)                │
+│ + operator=(const       │ │ + operator=(const       │ │ + operator=(const       │
+│   ShrubberyCreationForm&)│ │   RobotomyRequestForm&)│ │   PresidentialPardonForm│
+│   : ShrubberyCreationForm│ │   : RobotomyRequestForm │ │   &): PresidentialPardon│
+│   &                     │ │   &                     │ │   Form&                  │
+│ + ~ShrubberyCreationForm│ │ + ~RobotomyRequestForm  │ │ + ~PresidentialPardonForm│
+│   ()                    │ │   ()                    │ │   ()                     │
+│ + execute(executor:     │ │ + execute(executor:    │ │ + execute(executor:      │
+│   const Bureaucrat&):   │ │   const Bureaucrat&):  │ │   const Bureaucrat&):    │
+│   void                  │ │   void                  │ │   void                  │
+└─────────────────────────┘ └─────────────────────────┘ └─────────────────────────┘
+```
+
+## 🔗 **RELACIONES ENTRE CLASES**
+
+### **1. Herencia (Inheritance)**
+```
+Form (Base Class - Abstract)
+├── ShrubberyCreationForm (Derived Class)
+├── RobotomyRequestForm (Derived Class)
+└── PresidentialPardonForm (Derived Class)
+```
+
+### **2. Uso/Asociación (Uses/Association)**
+```
+Bureaucrat ──uses──> Form
+    │                    │
+    │                    │
+    │                    ▼
+    │              ┌─────────────┐
+    │              │ beSigned()   │
+    │              │ execute()    │
+    │              └─────────────┘
+    │
+    ▼
+┌─────────────┐
+│ signForm()  │
+│ executeForm()│
+└─────────────┘
+```
+
+### **3. Dependencias**
+```
+Bureaucrat ──depends on──> Form
+Form ──depends on──> Bureaucrat
+```
+
+## 📋 **DETALLES DE IMPLEMENTACIÓN**
+
+### **Bureaucrat Class**
+- **Atributos**:
+  - `_name`: Nombre del burócrata (const)
+  - `_grade`: Grado del burócrata (1-150)
+- **Métodos Clave**:
+  - `signForm()`: Firma un formulario
+  - `executeForm()`: Ejecuta un formulario
+  - `incrementGrade()`: Aumenta el grado
+  - `decrementGrade()`: Disminuye el grado
+
+### **Form Class (Abstract)**
+- **Atributos**:
+  - `_name`: Nombre del formulario
+  - `_Signed`: Estado de firma
+  - `_gradeToSign`: Grado mínimo para firmar
+  - `_gradeToExecute`: Grado mínimo para ejecutar
+- **Método Virtual Puro**:
+  - `execute()`: Debe ser implementado por clases derivadas
+
+### **Formularios Específicos**
+- **ShrubberyCreationForm**: Crea archivos con arte ASCII
+- **RobotomyRequestForm**: Robotomización con 50% de éxito
+- **PresidentialPardonForm**: Perdón presidencial
+
+## 🎯 **FLUJO DE EJECUCIÓN**
+
+```
+1. Crear Bureaucrat
+   │
+   ▼
+2. Crear Form (Shrubbery/Robotomy/Presidential)
+   │
+   ▼
+3. Bureaucrat.signForm(Form)
+   │
+   ▼
+4. Bureaucrat.executeForm(Form)
+   │
+   ▼
+5. Form.execute(Bureaucrat)
+   │
+   ▼
+6. Validaciones + Acción Específica
+```
+
+## ⚠️ **EXCEPCIONES**
+
+### **Jerarquía de Excepciones**
+```
+std::exception
+├── Bureaucrat::GradeTooHighException
+├── Bureaucrat::GradeTooLowException
+├── Form::GradeTooHighException
+├── Form::GradeTooLowException
+└── Form::FormException
+```
+
+### **Casos de Excepción**
+1. **Grade < 1**: `GradeTooHighException`
+2. **Grade > 150**: `GradeTooLowException`
+3. **Form no firmado**: `FormException`
+4. **Grade insuficiente para ejecutar**: `GradeTooLowException`
+
+## 🔧 **PATRONES DE DISEÑO**
+
+### **1. Template Method Pattern**
+- `Form::execute()` define el algoritmo
+- Clases derivadas implementan la acción específica
+
+### **2. Strategy Pattern**
+- Diferentes tipos de formularios con diferentes comportamientos
+- Polimorfismo para ejecutar la acción correcta
+
+### **3. RAII (Resource Acquisition Is Initialization)**
+- Gestión automática de recursos
+- Destructores para limpieza
+
+## 📊 **DIAGRAMA DE SECUENCIA**
+
+```
+Bureaucrat    Form        ShrubberyForm
+    │           │              │
+    │           │              │
+    │──signForm()─>│              │
+    │           │              │
+    │           │              │
+    │<──beSigned()─│              │
+    │           │              │
+    │           │              │
+    │──executeForm()─>│              │
+    │           │              │
+    │           │              │
+    │           │──execute()──>│
+    │           │              │
+    │           │              │
+    │<──result───│<──result─────│
+    │           │              │
+```
+
+## 🎨 **DIAGRAMA DE COMPONENTES**
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Bureaucrat    │    │      Form        │    │  Main Program   │
+│   Component     │    │   Component      │    │   Component     │
+├─────────────────┤    ├─────────────────┤    ├─────────────────┤
+│ - name          │    │ - name           │    │ - bureaucrats   │
+│ - grade         │    │ - signed         │    │ - forms         │
+│ + signForm()    │◄──►│ - gradeToSign    │    │ + testCases()   │
+│ + executeForm() │    │ - gradeToExecute │    │ + runTests()    │
+└─────────────────┘    │ + beSigned()     │    └─────────────────┘
+                       │ + execute()      │
+                       └─────────────────┘
+                                │
+                                │
+                       ┌────────┴────────┐
+                       │                 │
+                       ▼                 ▼
+              ┌─────────────────┐ ┌─────────────────┐
+              │ ShrubberyForm   │ │ RobotomyForm    │
+              │ Component        │ │ Component        │
+              ├─────────────────┤ ├─────────────────┤
+              │ - target        │ │ - target        │
+              │ + execute()     │ │ + execute()     │
+              └─────────────────┘ └─────────────────┘
+```
+
+## 📝 **NOTAS IMPORTANTES**
+
+1. **Form es una clase abstracta** - No se puede instanciar directamente
+2. **execute() es virtual puro** - Debe ser implementado por clases derivadas
+3. **Bureaucrat maneja excepciones** - En signForm() y executeForm()
+4. **Cada formulario tiene su propia lógica** - Implementación específica de execute()
+5. **Validaciones en execute()** - Form firmado + grade suficiente
+6. **Polimorfismo** - Bureaucrat puede ejecutar cualquier tipo de Form
+
+## 🎓 **CONCEPTOS CLAVE PARA EL EXAMEN**
+
+- **Herencia**: Form como clase base abstracta
+- **Polimorfismo**: execute() virtual puro
+- **Excepciones**: Manejo de errores personalizado
+- **Encapsulación**: Atributos privados, métodos públicos
+- **RAII**: Gestión automática de recursos
+- **Const-correctness**: Uso apropiado de const
+- **Template Method**: Algoritmo definido en clase base
+- **Strategy Pattern**: Diferentes comportamientos por formulario
+
+---
+
+*Este diagrama UML muestra la estructura completa del ejercicio ex02, incluyendo todas las clases, relaciones, métodos y patrones de diseño utilizados.*
