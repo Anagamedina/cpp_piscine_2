@@ -13,39 +13,61 @@
 #include <iostream>
 #include <exception>
 #include "Bureaucrat.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
 #include "Form.hpp"
 
 int main(){
-	std::cout << "=== DEMOSTRACIÓN DEL FORM Y BUREAUCRAT ===" << std::endl << std::endl;
+	std::cout << "=== INTERN AND FORM DEMONSTRATION ===" << std::endl << std::endl;
 	
 	try {
-		std::cout << "--- Test 1: Caso exitoso ---" << std::endl;
-		Form contract("Contrato de Trabajo", 10, 5);
-		Bureaucrat manager("Manager Bob", 8);
-
-
-		ShrubberyCreationForm	form1("my_space");
-		RobotomyRequestForm		form2("my_bath");
-		PresidentialPardonForm  form3("my_tree");
-
-		manager.signForm(form1);
-
-		manager.executeForm(form1);
-		std::cout << contract << std::endl;
-		std::cout << manager << std::endl;
+		// Create bureaucrats and intern
+		Bureaucrat highLevel("High Manager", 3);
+		Bureaucrat lowLevel("Low Clerk", 140);
+		Intern intern;
 		
-		contract.beSigned(manager);
-		std::cout << "¡Formulario firmado exitosamente!" << std::endl;
-		std::cout << contract << std::endl;
+		std::cout << "--- Test 1: Successful form creation and execution ---" << std::endl;
+		
+		// Create forms using Intern
+		Form* shrubbery = intern.makeForm("shrubbery creation", "garden");
+		Form* robotomy = intern.makeForm("robotomy request", "target");
+		Form* pardon = intern.makeForm("presidential pardon", "criminal");
+		
+		if (shrubbery) {
+			highLevel.signForm(*shrubbery);
+			highLevel.executeForm(*shrubbery);
+			delete shrubbery;
+		}
+		
+		if (robotomy) {
+			highLevel.signForm(*robotomy);
+			highLevel.executeForm(*robotomy);
+			delete robotomy;
+		}
+		
+		if (pardon) {
+			highLevel.signForm(*pardon);
+			highLevel.executeForm(*pardon);
+			delete pardon;
+		}
+		
+		std::cout << "\n--- Test 2: Unknown form type ---" << std::endl;
+		Form* unknown = intern.makeForm("unknown form", "target");
+		if (unknown) {
+			delete unknown;
+		}
+		
+		std::cout << "\n--- Test 3: Low-level bureaucrat ---" << std::endl;
+		Form* lowForm = intern.makeForm("shrubbery creation", "test");
+		if (lowForm) {
+			lowLevel.signForm(*lowForm);
+			lowLevel.executeForm(*lowForm);
+			delete lowForm;
+		}
 		
 	} catch (const std::exception& e) {
 		std::cout << "Error: " << e.what() << std::endl;
 	}
 	
-	
-	std::cout << "\n=== FIN DE LA DEMOSTRACIÓN ===" << std::endl;
+	std::cout << "\n=== END OF DEMONSTRATION ===" << std::endl;
 	return 0;
 }

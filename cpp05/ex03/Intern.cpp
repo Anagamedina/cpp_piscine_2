@@ -11,7 +11,12 @@
 /* ************************************************************************** */
 
 #include "Intern.hpp"
+#include "Form.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
+// Constructors
 Intern::Intern(){}
 
 Intern::Intern(const Intern& copy){
@@ -19,30 +24,53 @@ Intern::Intern(const Intern& copy){
 }
 
 Intern& Intern::operator=(const Intern& obj) { 
-	
 	(void)obj;
 	return *this;
 }
 
 Intern::~Intern(){}
 
-//funciones auxiliares
-
-AForm* Intern::makeForm(const std::string& formName, const std::string& target){
-	std::string formNames[3] = { "RobotomyRequestForm", "PresidentialPardonForm", "ShrubberyCreationForm"};
-
-	AForm* (*formCreators[3])(std::string) = {
-		//funciones
+// Form creation method
+Form* Intern::makeForm(const std::string& formName, const std::string& target){
+	// Array of form names
+	std::string formNames[3] = { 
+		"shrubbery creation", 
+		"robotomy request", 
+		"presidential pardon"
 	};
 
-	for (int i; i < 3; i++){
+	// Array of form creator function pointers
+	Form* (*formCreators[3])(const std::string&) = {
+		createShrubberyForm,
+		createRobotomyForm,
+		createPresidentialForm
+	};
+
+	// Search for matching form name
+	for (int i = 0; i < 3; i++){
 		if (formName == formNames[i]){
-			std::cout << "Intern creates" << formName << "form for" << target << std::endl;
-			return //funcion auxiliar[i]
+			std::cout << "Intern creates " << formName << " form for " << target << std::endl;
+			return formCreators[i](target);
 		} 
 	}
+	
+	// Form name not found
+	std::cout << "Intern couldn't create form: " << formName << " (unknown form type)" << std::endl;
+	return NULL;
 }
 
-//funcion especial makeform
+// Static form creator functions
+Form* Intern::createShrubberyForm(const std::string& target){
+	return new ShrubberyCreationForm(target);
+}
+
+Form* Intern::createRobotomyForm(const std::string& target){
+	return new RobotomyRequestForm(target);
+}
+
+Form* Intern::createPresidentialForm(const std::string& target){
+	return new PresidentialPardonForm(target);
+}
+
 
 

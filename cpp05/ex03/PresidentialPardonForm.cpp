@@ -11,17 +11,18 @@
 /* ************************************************************************** */
 
 #include "PresidentialPardonForm.hpp"
+#include "Bureaucrat.hpp"
 
-//constructors
-PresidentialPardonForm::PresidentialPardonForm() : AForm("Default", 25, 5 ), _target("Default_target"){}
+// Constructors
+PresidentialPardonForm::PresidentialPardonForm() : Form("Default", 25, 5 ), _target("Default_target"){}
 
-PresidentialPardonForm::PresidentialPardonForm(const std::string& target) : AForm("PresidentialPardonForm", 25, 5 ), _target(target){}
+PresidentialPardonForm::PresidentialPardonForm(const std::string& target) : Form("Presidential Pardon", 25, 5 ), _target(target){}
 
-PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& obj) : AForm(obj), _target(obj._target){}
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& obj) : Form(obj), _target(obj._target){}
 
 PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPardonForm& obj){
 	if (this != &obj){
-		AForm::operator=(obj);
+		Form::operator=(obj);
 		_target = obj._target;
 	}
 	return *this;
@@ -29,13 +30,14 @@ PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPard
 
 
 
-//destructors
+// Destructor
 PresidentialPardonForm::~PresidentialPardonForm() {}
 
 void PresidentialPardonForm::execute(const Bureaucrat& executor) const { 
 	if (!getSigned())
-		throw FormException();
+		throw FormException();  // Form must be signed to execute
 	if (executor.getGrade() > getGradeToExecute())
-		throw GradeTooLowException();
-	std::cout << _target << "has been pardoned by Zaphod Beeblebrox.\n" << std::endl;
+		throw GradeTooLowException();  // Bureaucrat grade too low to execute
+	
+	std::cout << _target << " has been pardoned by Zaphod Beeblebrox." << std::endl;
 }

@@ -10,14 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef INTERN_HPP
+# define INTERN_HPP
+
+#include <iostream>
+#include <string>
+
+class Form;
 
 class Intern {
 	public:
+		// Constructors
 		Intern();
 		Intern(const Intern& copy);
 		Intern& operator=(const Intern& obj);
 		~Intern();
 
-		//dvuelve un puntero a un objeto AForm
-		AForm* makeForm(const std::string& formName, const std::string& target);
-}
+		// Form creation method
+		Form* makeForm(const std::string& formName, const std::string& target);
+
+	private:
+		// Static form creator functions
+		static Form* createShrubberyForm(const std::string& target);
+		static Form* createRobotomyForm(const std::string& target);
+		static Form* createPresidentialForm(const std::string& target);
+};
+
+#endif
