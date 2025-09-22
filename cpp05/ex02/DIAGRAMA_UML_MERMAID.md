@@ -339,36 +339,4 @@ graph TB
     F --> R
 ```
 
-## 📝 **INSTRUCCIONES DE USO**
 
-### **Para usar estos diagramas:**
-
-1. **Copia el código Mermaid** de cualquier sección
-2. **Pega en un editor que soporte Mermaid** como:
-   - GitHub (en archivos .md)
-   - GitLab
-   - Notion
-   - Mermaid Live Editor (https://mermaid.live/)
-   - VS Code con extensión Mermaid
-
-### **Ejemplo de uso en GitHub:**
-```markdown
-```mermaid
-classDiagram
-    class Bureaucrat {
-        -const string _name
-        -int _grade
-        +getName() const string&
-        +getGrade() int
-    }
-```
-
-### **Herramientas recomendadas:**
-- **Mermaid Live Editor**: https://mermaid.live/
-- **VS Code**: Extensión "Mermaid Preview"
-- **GitHub**: Soporte nativo en archivos .md
-- **GitLab**: Soporte nativo en archivos .md
-
----
-
-*Estos diagramas Mermaid proporcionan una representación visual completa del ejercicio ex02, incluyendo clases, relaciones, flujos de ejecución y arquitectura del sistema.*
