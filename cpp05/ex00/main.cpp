@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 14:56:37 by anamedin          #+#    #+#             */
-/*   Updated: 2025/09/16 18:54:20 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/09/23 18:16:25 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int main(){
 	} catch (const std::exception& e) {
 		std::cout << "Error: " << e.what() << std::endl;
 	}
-	
+
+	std::cout << "\n--- Press ENTER to continue ---";
+	std::cin.get();	
 	// Test 2: Increment grade (move up hierarchy)
 	std::cout << "\n2. Incrementando grado (subiendo en jerarquía):" << std::endl;
 	try {
@@ -37,6 +39,8 @@ int main(){
 		std::cout << "Error: " << e.what() << std::endl;
 	}
 	
+	std::cout << "\n--- Press ENTER to continue ---";
+	std::cin.get();	
 	// Test 3: Decrement grade (move down hierarchy)
 	std::cout << "\n3. Decrementando grado (bajando en jerarquía):" << std::endl;
 	try {
@@ -48,6 +52,8 @@ int main(){
 		std::cout << "Error: " << e.what() << std::endl;
 	}
 	
+	std::cout << "\n--- Press ENTER to continue ---";
+	std::cin.get();	
 	// Test 4: Try to create bureaucrat with invalid grade (too high)
 	std::cout << "\n4. Intentando crear Bureaucrat con grado muy alto (0):" << std::endl;
 	try {
@@ -57,6 +63,9 @@ int main(){
 		std::cout << "Error capturado: " << e.what() << std::endl;
 	}
 	
+
+	std::cout << "\n--- Press ENTER to continue ---";
+	std::cin.get();	
 	// Test 5: Try to create bureaucrat with invalid grade (too low)
 	std::cout << "\n5. Intentando crear Bureaucrat con grado muy bajo (151):" << std::endl;
 	try {
@@ -66,6 +75,8 @@ int main(){
 		std::cout << "Error capturado: " << e.what() << std::endl;
 	}
 	
+	std::cout << "\n--- Press ENTER to continue ---";
+	std::cin.get();	
 	// Test 6: Try to increment when already at highest grade
 	std::cout << "\n6. Intentando incrementar grado cuando ya está en el máximo (1):" << std::endl;
 	try {
@@ -77,6 +88,9 @@ int main(){
 		std::cout << "Error capturado: " << e.what() << std::endl;
 	}
 	
+
+	std::cout << "\n--- Press ENTER to continue ---";
+	std::cin.get();	
 	// Test 7: Try to decrement when already at lowest grade
 	std::cout << "\n7. Intentando decrementar grado cuando ya está en el mínimo (150):" << std::endl;
 	try {
@@ -88,6 +102,9 @@ int main(){
 		std::cout << "Error capturado: " << e.what() << std::endl;
 	}
 	
+
+	std::cout << "\n--- Press ENTER to continue ---";
+	std::cin.get();	
 	// Test 8: Copy bureaucrat
 	std::cout << "\n8. Copiando un Bureaucrat:" << std::endl;
 	try {
