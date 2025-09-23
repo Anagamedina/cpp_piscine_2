@@ -135,6 +135,9 @@ Form* (*formCreators[3])(const std::string&) = {
 - [Apuntes Ex03](./ex03/APUNTES_EX03.md)
 - **Temas**: Factory Method, punteros a función, gestión de memoria
 
+### **Notas de Excepciones (Generales)**
+- [Apuntes de Excepciones + UML](./EXCEPTIONS_NOTES.md)
+
 ## 🔧 **CARACTERÍSTICAS TÉCNICAS**
 
 ### **Compatibilidad C++98**
