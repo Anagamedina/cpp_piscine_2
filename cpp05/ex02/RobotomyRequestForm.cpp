@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RobotomyRequestForm.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 11:57:56 by anamedin          #+#    #+#             */
-/*   Updated: 2025/09/18 12:46:40 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:45:12 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 #include <ctime>
 
 // Constructors
-RobotomyRequestForm::RobotomyRequestForm() : Form("Default", 72, 45), _target("Default_target") { }
+RobotomyRequestForm::RobotomyRequestForm() : AForm("Default", 72, 45), _target("Default_target") { }
 
-RobotomyRequestForm::RobotomyRequestForm(const std::string& target) : Form("Robotomy request", 72, 45), _target(target) {}
+RobotomyRequestForm::RobotomyRequestForm(const std::string& target) : AForm("Robotomy request", 72, 45), _target(target) {}
 
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& obj) : Form(obj), _target(obj._target){}
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& obj) : AForm(obj), _target(obj._target){}
 
 RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& obj) { 
 	if (this != &obj) { 
-		Form::operator=(obj);
+		AForm::operator=(obj);
 		_target = obj._target;
 	}
 	return *this;

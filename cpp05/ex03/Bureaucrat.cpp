@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 17:01:08 by anamedin          #+#    #+#             */
-/*   Updated: 2025/09/16 18:53:41 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:01:59 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 // Constructors 
 Bureaucrat::Bureaucrat() : _name("Default"), _grade(42) {}
@@ -62,7 +62,7 @@ void Bureaucrat::decrementGrade(){
 }
 
 // Form management methods
-void Bureaucrat::signForm(Form& form){
+void Bureaucrat::signForm(AForm& form){
 	try {
 		form.beSigned(*this);
 		std::cout << _name << " signed " << form.getName() << std::endl;
@@ -72,7 +72,7 @@ void Bureaucrat::signForm(Form& form){
 	}
 }
 
-void Bureaucrat::executeForm(const Form& form){
+void Bureaucrat::executeForm(const AForm& form){
 	try {
 		form.execute(*this);
 		std::cout << _name << " executed " << form.getName() << std::endl;

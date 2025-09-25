@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 10:09:22 by anamedin          #+#    #+#             */
-/*   Updated: 2025/09/18 11:01:35 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:06:57 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FORM_HPP
-# define FORM_HPP
+#ifndef AFORM_HPP
+# define AFORM_HPP
 
 #include <iostream>
 #include <exception>
@@ -19,21 +19,21 @@
 
 class Bureaucrat;
 
-class Form {
+class AForm {
 	private:
 		const std::string   _name;
 		bool				_Signed;
 		const int			_gradeToSign;
 		const int			_gradeToExecute;
 		
-		Form();
+		AForm();
 
 	public:
-		Form(const std::string name, int gradetosign, int gradetoexecute);
-		Form(const Form& obj);
-		Form& operator=(const Form& obj);
+		AForm(const std::string name, int gradetosign, int gradetoexecute);
+		AForm(const AForm& obj);
+		AForm& operator=(const AForm& obj);
 		// Destructor
-		virtual ~Form();
+		virtual ~AForm();
 
 		// Getters
 		const std::string& getName() const;
@@ -71,6 +71,9 @@ class Form {
 		};
 };
 
-std::ostream& operator<<(std::ostream& out, const Form& obj);
+std::ostream& operator<<(std::ostream& out, const AForm& obj);
 
 #endif
+
+
+

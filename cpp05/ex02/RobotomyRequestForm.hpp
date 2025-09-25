@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RobotomyRequestForm.hpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 11:47:41 by anamedin          #+#    #+#             */
-/*   Updated: 2025/09/18 11:57:45 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:45:08 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define ROBOTOMYREQUESTFORM_HPP
 
 #include <iostream>
-#include "Form.hpp"
+#include "AForm.hpp"
 
-class RobotomyRequestForm : public Form { 
+class RobotomyRequestForm : public AForm { 
 	private:
 		std::string		_target;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Intern.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 17:15:43 by anamedin          #+#    #+#             */
-/*   Updated: 2025/09/18 17:46:42 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:58:55 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <iostream>
 #include <string>
 
-class Form;
+class AForm;
 
 class Intern {
 	public:
@@ -27,13 +27,13 @@ class Intern {
 		~Intern();
 
 		// Form creation method
-		Form* makeForm(const std::string& formName, const std::string& target);
+		AForm* makeForm(const std::string& formName, const std::string& target);
 
 	private:
 		// Static form creator functions
-		static Form* createShrubberyForm(const std::string& target);
-		static Form* createRobotomyForm(const std::string& target);
-		static Form* createPresidentialForm(const std::string& target);
+		static AForm* createShrubberyForm(const std::string& target);
+		static AForm* createRobotomyForm(const std::string& target);
+		static AForm* createPresidentialForm(const std::string& target);
 };
 
 #endif

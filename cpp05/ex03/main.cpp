@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 14:56:37 by anamedin          #+#    #+#             */
-/*   Updated: 2025/09/23 19:24:24 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:10:57 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ int main(){
 
     try {
         // Create bureaucrats and intern
-        Bureaucrat highLevel(CYAN "High Manager" RESET, 3);
-        Bureaucrat lowLevel(CYAN "Low Clerk" RESET, 140);
-        Intern intern;
+        Bureaucrat      highLevel(CYAN "High Manager" RESET, 3);
+        Bureaucrat      lowLevel(CYAN "Low Clerk" RESET, 140);
+        Intern          intern;
 
         std::cout << BLUE << "--- Test 1: Successful form creation and execution ---" << RESET << std::endl;
 
         // Create forms using Intern
-        Form* shrubbery = intern.makeForm("shrubbery creation", "garden");
-        Form* robotomy = intern.makeForm("robotomy request", "target");
-        Form* pardon = intern.makeForm("presidential pardon", "criminal");
+        AForm* shrubbery = intern.makeForm("shrubbery creation", "garden");
+        AForm* robotomy = intern.makeForm("robotomy request", "target");
+        AForm* pardon = intern.makeForm("presidential pardon", "criminal");
 
         if (shrubbery) {
             highLevel.signForm(*shrubbery);
@@ -65,7 +65,7 @@ int main(){
         std::cin.get();
 
         std::cout << BLUE << "\n--- Test 2: Unknown form type ---" << RESET << std::endl;
-        Form* unknown = intern.makeForm("unknown form", "target");
+        AForm* unknown = intern.makeForm("unknown form", "target");
         if (!unknown) {
             std::cout << RED << "Intern couldn't create unknown form!" << RESET << std::endl;
         } else {
@@ -76,7 +76,7 @@ int main(){
         std::cin.get();
 
         std::cout << BLUE << "\n--- Test 3: Low-level bureaucrat ---" << RESET << std::endl;
-        Form* lowForm = intern.makeForm("shrubbery creation", "test");
+        AForm* lowForm = intern.makeForm("shrubbery creation", "test");
         if (lowForm) {
             lowLevel.signForm(*lowForm);
             lowLevel.executeForm(*lowForm);

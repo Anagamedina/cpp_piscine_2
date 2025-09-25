@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Form.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 10:09:22 by anamedin          #+#    #+#             */
-/*   Updated: 2025/09/17 10:25:34 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:28:40 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ class Form {
 		virtual ~Form();
 
 		// Getters
-		const std::string& getName() const;
-		bool getSigned() const;
-		int	getGradeToSign() const;
-		int getGradeToExecute() const;
+		const 	std::string& getName() const;
+		bool 	getSigned() const;
+		int		getGradeToSign() const;
+		int 	getGradeToExecute() const;
 
 		// Sign form if bureaucrat has sufficient grade 
 		void beSigned(const Bureaucrat& b);

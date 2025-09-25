@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Intern.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 17:47:14 by anamedin          #+#    #+#             */
-/*   Updated: 2025/09/18 18:32:01 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:00:16 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Intern.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
@@ -31,7 +31,7 @@ Intern& Intern::operator=(const Intern& obj) {
 Intern::~Intern(){}
 
 // Form creation method
-Form* Intern::makeForm(const std::string& formName, const std::string& target){
+AForm* Intern::makeForm(const std::string& formName, const std::string& target){
 	// Array of form names
 	std::string formNames[3] = { 
 		"shrubbery creation", 
@@ -40,7 +40,7 @@ Form* Intern::makeForm(const std::string& formName, const std::string& target){
 	};
 
 	// Array of form creator function pointers
-	Form* (*formCreators[3])(const std::string&) = {
+	AForm* (*formCreators[3])(const std::string&) = {
 		createShrubberyForm,
 		createRobotomyForm,
 		createPresidentialForm
@@ -60,15 +60,15 @@ Form* Intern::makeForm(const std::string& formName, const std::string& target){
 }
 
 // Static form creator functions
-Form* Intern::createShrubberyForm(const std::string& target){
+AForm* Intern::createShrubberyForm(const std::string& target){
 	return new ShrubberyCreationForm(target);
 }
 
-Form* Intern::createRobotomyForm(const std::string& target){
+AForm* Intern::createRobotomyForm(const std::string& target){
 	return new RobotomyRequestForm(target);
 }
 
-Form* Intern::createPresidentialForm(const std::string& target){
+AForm* Intern::createPresidentialForm(const std::string& target){
 	return new PresidentialPardonForm(target);
 }
 

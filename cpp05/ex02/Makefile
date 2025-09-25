@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+         #
+#    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/15 14:50:23 by anamedin          #+#    #+#              #
-#    Updated: 2025/09/17 10:07:13 by anamedin         ###   ########.fr        #
+#    Updated: 2025/09/25 15:56:31 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 # ===========================
 
 # Executable name
-NAME = form
+NAME = abstract_form
 # Compiler
 CXX = c++
 
