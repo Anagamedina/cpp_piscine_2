@@ -88,30 +88,6 @@ flowchart TD
 
 
 
-## 🔧 **FLOWCHART DE MANEJO DE EXCEPCIONES**
-
-```mermaid
-flowchart TD
-    Start([⚠️ Manejo de Excepciones]) --> TryBlock[🔄 Bloque try]
-    TryBlock --> Operation[⚡ Operación (sign/execute)]
-    
-    Operation --> CheckException{❓ ¿Excepción lanzada?}
-    CheckException -->|❌ No| Success[✅ Operación exitosa]
-    CheckException -->|✅ Sí| CatchBlock[🛡️ Bloque catch]
-    
-    CatchBlock --> CheckType{❓ ¿Tipo de excepción?}
-    CheckType -->|GradeTooHigh| HighException[❌ GradeTooHighException]
-    CheckType -->|GradeTooLow| LowException[❌ GradeTooLowException]
-    CheckType -->|FormNotSigned| FormException[❌ FormException]
-    
-    HighException --> PrintError[📢 Imprimir mensaje de error]
-    LowException --> PrintError
-    FormException --> PrintError
-    
-    PrintError --> End([🏁 Fin])
-    Success --> End
-```
-
 ## 🎮 **FLOWCHART DE CASOS DE PRUEBA**
 
 ```mermaid
