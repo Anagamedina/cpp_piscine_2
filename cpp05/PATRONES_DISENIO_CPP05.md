@@ -141,19 +141,3 @@ AForm* Intern::makeForm(std::string const &name, std::string const &target) {
 - ex02: Template Method completo + Polimorfismo
 - ex03: Factory Method (tabla de constructores) + OCP
 
-### Buenas prácticas complementarias (presentación)
-- Usar excepciones específicas y mensajes claros en `what()`.
-- Mantener interfaces estables (`AForm`) y depender de abstracciones.
-- C++98 compat: cast explícito para `std::srand(std::time(0))` y evitar características modernas.
-- RAII: liberar memoria de `new` (ej.: `delete` tras usar `Intern::makeForm`).
-
-```mermaid
-flowchart TD
-    B(Bureaucrat) -->|signForm/executeForm| AF[AForm]
-    AF -->|polymorphic execute| F1[Shrubbery]
-    AF --> F2[Robotomy]
-    AF --> F3[Pardon]
-    I[Intern] -->|makeForm(name,target)| AF
-```
-
-
