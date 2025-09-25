@@ -16,7 +16,7 @@
 # ===========================
 
 # Executable name
-NAME = form
+NAME = intern_form
 # Compiler
 CXX = c++
 
@@ -31,7 +31,7 @@ DEP_DIR = deps/
 # SOURCES AND OBJECTS
 # ===========================
 
-SRCS = main.cpp Bureaucrat.cpp Form.cpp Intern.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
+SRCS = main.cpp Bureaucrat.cpp AForm.cpp Intern.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
 
 OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.cpp=.o))
 DEPS = $(addprefix $(DEP_DIR), $(SRCS:.cpp=.d))

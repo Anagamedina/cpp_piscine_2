@@ -14,7 +14,7 @@
 #include <exception>
 #include "Bureaucrat.hpp"
 #include "Intern.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 // Colores ANSI
 #define RESET   "\033[0m"

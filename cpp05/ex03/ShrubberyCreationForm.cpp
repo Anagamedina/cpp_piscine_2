@@ -15,15 +15,15 @@
 #include <fstream>
 
 // Constructors
-ShrubberyCreationForm::ShrubberyCreationForm() : Form("Default", 145, 137), _target("Default"){}
+ShrubberyCreationForm::ShrubberyCreationForm() : AForm("Default", 145, 137), _target("Default"){}
 
-ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target) : Form("Shrubbery creation", 145, 137), _target(target){}
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target) : AForm("Shrubbery creation", 145, 137), _target(target){}
 
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& obj) : Form(obj),  _target(obj._target) {}
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& obj) : AForm(obj),  _target(obj._target) {}
 
 ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& obj){
 	if (this != &obj){
-		Form::operator=(obj);
+		AForm::operator=(obj);
 		_target = obj._target;
 	}
 	return *this;

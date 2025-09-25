@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 // Constructors 
 Bureaucrat::Bureaucrat() : _name("Default"), _grade(42) {}
@@ -62,7 +62,7 @@ void Bureaucrat::decrementGrade(){
 }
 
 // Form management methods
-void Bureaucrat::signForm(Form& form){
+void Bureaucrat::signForm(AForm& form){
 	try {
 		form.beSigned(*this);
 		std::cout << _name << " signed " << form.getName() << std::endl;
@@ -72,7 +72,7 @@ void Bureaucrat::signForm(Form& form){
 	}
 }
 
-void Bureaucrat::executeForm(const Form& form){
+void Bureaucrat::executeForm(const AForm& form){
 	try {
 		form.execute(*this);
 		std::cout << _name << " executed " << form.getName() << std::endl;

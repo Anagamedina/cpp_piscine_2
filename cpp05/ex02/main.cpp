@@ -20,7 +20,7 @@
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 int main(){
 	std::cout << "=== FORM AND BUREAUCRAT DEMONSTRATION ===" << std::endl << std::endl;
@@ -80,7 +80,7 @@ int main(){
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 // Colores ANSI
 #define RESET   "\033[0m"

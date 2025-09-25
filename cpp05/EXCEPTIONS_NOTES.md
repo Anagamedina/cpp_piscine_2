@@ -15,28 +15,52 @@ try {
 
 ## 🧩 Jerarquía estándar de excepciones (C++98)
 
+Nota sobre Mermaid: algunos visores fallan con nombres que incluyen `std::` y `::`. Abajo uso identificadores simples y agrego una leyenda con el mapeo a los tipos reales de C++.
+
 ```mermaid
 classDiagram
-    std::exception <|-- std::logic_error
-    std::exception <|-- std::runtime_error
+    Exception <|-- LogicError
+    Exception <|-- RuntimeError
 
-    std::logic_error <|-- std::domain_error
-    std::logic_error <|-- std::invalid_argument
-    std::logic_error <|-- std::length_error
-    std::logic_error <|-- std::out_of_range
+    LogicError <|-- DomainError
+    LogicError <|-- InvalidArgument
+    LogicError <|-- LengthError
+    LogicError <|-- OutOfRange
 
-    std::runtime_error <|-- std::range_error
-    std::runtime_error <|-- std::overflow_error
-    std::runtime_error <|-- std::underflow_error
+    RuntimeError <|-- RangeError
+    RuntimeError <|-- OverflowError
+    RuntimeError <|-- UnderflowError
 
-    class std::exception{
+    class Exception{
         +what() const char* throw()
     }
 ```
 
-- Base “fundamental”: `std::exception` (todas heredan de aquí y proporcionan `what()`).
-- Errores lógicos (no dependen del estado del sistema): `std::logic_error`, `std::invalid_argument`, `std::out_of_range`, etc.
-- Errores de ejecución (dependen del entorno/estado): `std::runtime_error`, `std::overflow_error`, `std::underflow_error`, etc.
+Leyenda (mapa a C++ real):
+- `Exception` → `std::exception`
+- `LogicError` → `std::logic_error`
+- `RuntimeError` → `std::runtime_error`
+- `DomainError` → `std::domain_error`
+- `InvalidArgument` → `std::invalid_argument`
+- `LengthError` → `std::length_error`
+- `OutOfRange` → `std::out_of_range`
+- `RangeError` → `std::range_error`
+- `OverflowError` → `std::overflow_error`
+- `UnderflowError` → `std::underflow_error`
+
+Alternativa ASCII (fallback):
+```
+std::exception
+├─ std::logic_error
+│  ├─ std::domain_error
+│  ├─ std::invalid_argument
+│  ├─ std::length_error
+│  └─ std::out_of_range
+└─ std::runtime_error
+   ├─ std::range_error
+   ├─ std::overflow_error
+   └─ std::underflow_error
+```
 
 ## 🏛️ Excepciones específicas del proyecto (CPP05)
 
@@ -44,33 +68,46 @@ En este proyecto definimos excepciones personalizadas dentro de las clases. Toda
 
 ```mermaid
 classDiagram
-    std::exception <|-- Bureaucrat::GradeTooHighException
-    std::exception <|-- Bureaucrat::GradeTooLowException
-    std::exception <|-- Form::GradeTooHighException
-    std::exception <|-- Form::GradeTooLowException
-    std::exception <|-- Form::FormException
+    Exception <|-- B_GradeTooHigh
+    Exception <|-- B_GradeTooLow
+    Exception <|-- F_GradeTooHigh
+    Exception <|-- F_GradeTooLow
+    Exception <|-- F_FormException
 
-    class Bureaucrat::GradeTooHighException{
+    class B_GradeTooHigh{
         +what() const char* throw()
     }
-    class Bureaucrat::GradeTooLowException{
+    class B_GradeTooLow{
         +what() const char* throw()
     }
-    class Form::GradeTooHighException{
+    class F_GradeTooHigh{
         +what() const char* throw()
     }
-    class Form::GradeTooLowException{
+    class F_GradeTooLow{
         +what() const char* throw()
     }
-    class Form::FormException{
+    class F_FormException{
         +what() const char* throw()
     }
 ```
 
-- `Bureaucrat::GradeTooHighException`: se lanza cuando el grade < 1.
-- `Bureaucrat::GradeTooLowException`: se lanza cuando el grade > 150 o una operación lo empeora por debajo del mínimo.
-- `Form::GradeTooHighException` / `Form::GradeTooLowException`: validaciones de límites para firmar/ejecutar.
-- `Form::FormException`: el formulario no está firmado (o condición contractual incumplida antes de ejecutar).
+Leyenda (mapa a C++ real):
+- `Exception` → `std::exception`
+- `B_GradeTooHigh` → `Bureaucrat::GradeTooHighException`
+- `B_GradeTooLow` → `Bureaucrat::GradeTooLowException`
+- `F_GradeTooHigh` → `Form::GradeTooHighException`
+- `F_GradeTooLow` → `Form::GradeTooLowException`
+- `F_FormException` → `Form::FormException`
+
+Alternativa ASCII (fallback):
+```
+std::exception
+├─ Bureaucrat::GradeTooHighException
+├─ Bureaucrat::GradeTooLowException
+├─ Form::GradeTooHighException
+├─ Form::GradeTooLowException
+└─ Form::FormException
+```
 
 ## 🔧 Cómo usamos las excepciones personalizadas
 
