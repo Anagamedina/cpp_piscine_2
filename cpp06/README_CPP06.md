@@ -695,22 +695,5 @@ T convert_with_validation(double value) {
 
 ---
 
-## 📚 7. RECURSOS ADICIONALES
 
-- **cppreference.com** - Documentación completa de casting
-- **ISO/IEC 14882** - Estándar C++
-- **Stroustrup, Bjarne** - "The C++ Programming Language"
-- **Meyers, Scott** - "Effective C++"
 
----
-
-## 🎯 Resumen del Módulo
-
-CPP06 te enseñará a:
-1. **Dominar los 4 tipos de casting** de C++
-2. **Manejar conversiones seguras** entre tipos
-3. **Implementar manejo de errores** robusto
-4. **Trabajar con valores especiales** como NaN e Inf
-5. **Aplicar patrones de diseño** para conversiones seguras
-
-¡Con estos conocimientos estarás preparado para enfrentar cualquier ejercicio de CPP06! 🚀
