@@ -153,6 +153,9 @@ Form* (*formCreators[3])(const std::string&) = {
 - **Strategy Pattern**: Diferentes comportamientos por formulario
 - **RAII**: Gestión automática de recursos
 
+Para una relación detallada entre ex00–ex03 y patrones de diseño, consulta:
+- [Patrones de Diseño en cpp05](./PATRONES_DISENIO_CPP05.md)
+
 ### **Gestión de Memoria**
 - **new/delete**: Para formularios dinámicos
 - **Verificación de NULL**: Siempre verificar punteros
