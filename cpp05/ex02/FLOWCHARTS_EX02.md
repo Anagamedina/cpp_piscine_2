@@ -86,42 +86,7 @@ flowchart TD
     Success --> End
 ```
 
-## 🤖 **FLOWCHART DE ROBOTOMY REQUEST FORM**
 
-```mermaid
-flowchart TD
-    Start([🤖 Robotomy Request Form]) --> Validate[🔍 Validar form firmado y grade]
-    Validate --> CheckValid{❓ Validaciones OK?}
-    
-    CheckValid -->|❌ No| ThrowException[❌ Lanzar excepción]
-    CheckValid -->|✅ Sí| SeedRandom[🎲 Inicializar generador aleatorio]
-    
-    SeedRandom --> GenerateRandom[🎯 Generar número aleatorio]
-    GenerateRandom --> CheckRandom{❓ rand() % 2 == 0?}
-    
-    CheckRandom -->|✅ Sí| Success[✅ Robotomy exitoso]
-    CheckRandom -->|❌ No| Failure[💥 Robotomy fallido]
-    
-    ThrowException --> End([🏁 Fin])
-    Success --> End
-    Failure --> End
-```
-
-## 👑 **FLOWCHART DE PRESIDENTIAL PARDON FORM**
-
-```mermaid
-flowchart TD
-    Start([👑 Presidential Pardon Form]) --> Validate[🔍 Validar form firmado y grade]
-    Validate --> CheckValid{❓ Validaciones OK?}
-    
-    CheckValid -->|❌ No| ThrowException[❌ Lanzar excepción]
-    CheckValid -->|✅ Sí| PrintPardon[📢 Imprimir mensaje de perdón]
-    
-    PrintPardon --> Success[✅ Perdón otorgado por Zaphod Beeblebrox]
-    
-    ThrowException --> End([🏁 Fin])
-    Success --> End
-```
 
 ## 🔧 **FLOWCHART DE MANEJO DE EXCEPCIONES**
 
