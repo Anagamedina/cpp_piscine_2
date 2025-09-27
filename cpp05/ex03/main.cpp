@@ -27,65 +27,79 @@
 int main(){
     std::cout << BLUE << "=== INTERN AND FORM DEMONSTRATION ===" << RESET << std::endl << std::endl;
 
-    try {
-        // Create bureaucrats and intern
-        Bureaucrat      highLevel(CYAN "High Manager" RESET, 3);
-        Bureaucrat      lowLevel(CYAN "Low Clerk" RESET, 140);
-        Intern          intern;
+    // Create bureaucrats and intern
+    Bureaucrat      highLevel(CYAN "High Manager" RESET, 3);
+    Bureaucrat      lowLevel(CYAN "Low Clerk" RESET, 140);
+    Intern          intern;
 
-        std::cout << BLUE << "--- Test 1: Successful form creation and execution ---" << RESET << std::endl;
+    std::cout << BLUE << "--- Test 1: Successful form creation and execution ---" << RESET << std::endl;
 
-        // Create forms using Intern
-        AForm* shrubbery = intern.makeForm("shrubbery creation", "garden");
-        AForm* robotomy = intern.makeForm("robotomy request", "target");
-        AForm* pardon = intern.makeForm("presidential pardon", "criminal");
+    // Create forms using Intern
+    AForm* shrubbery = intern.makeForm("shrubbery creation", "garden");
+    AForm* robotomy = intern.makeForm("robotomy request", "target");
+    AForm* pardon = intern.makeForm("presidential pardon", "criminal");
 
-        if (shrubbery) {
+    // Shrubbery Form - Individual try-catch
+    if (shrubbery) {
+        try {
             highLevel.signForm(*shrubbery);
             highLevel.executeForm(*shrubbery);
             std::cout << GREEN << "Shrubbery form successfully signed and executed!" << RESET << std::endl;
-            delete shrubbery;
+        } catch (const std::exception& e) {
+            std::cout << RED << "Shrubbery Error: " << e.what() << RESET << std::endl;
         }
+        delete shrubbery;
+    }
 
-        if (robotomy) {
+    // Robotomy Form - Individual try-catch
+    if (robotomy) {
+        try {
             highLevel.signForm(*robotomy);
             highLevel.executeForm(*robotomy);
             std::cout << GREEN << "Robotomy form successfully signed and executed!" << RESET << std::endl;
-            delete robotomy;
+        } catch (const std::exception& e) {
+            std::cout << RED << "Robotomy Error: " << e.what() << RESET << std::endl;
         }
+        delete robotomy;
+    }
 
-        if (pardon) {
+    // Pardon Form - Individual try-catch
+    if (pardon) {
+        try {
             highLevel.signForm(*pardon);
             highLevel.executeForm(*pardon);
             std::cout << GREEN << "Presidential pardon form successfully signed and executed!" << RESET << std::endl;
-            delete pardon;
+        } catch (const std::exception& e) {
+            std::cout << RED << "Pardon Error: " << e.what() << RESET << std::endl;
         }
+        delete pardon;
+    }
 
-        std::cout << YELLOW << "\n--- Press ENTER to continue ---" << RESET;
-        std::cin.get();
+    std::cout << YELLOW << "\n--- Press ENTER to continue ---" << RESET;
+    std::cin.get();
 
-        std::cout << BLUE << "\n--- Test 2: Unknown form type ---" << RESET << std::endl;
-        AForm* unknown = intern.makeForm("unknown form", "target");
-        if (!unknown) {
-            std::cout << RED << "Intern couldn't create unknown form!" << RESET << std::endl;
-        } else {
-            delete unknown;
-        }
+    std::cout << BLUE << "\n--- Test 2: Unknown form type ---" << RESET << std::endl;
+    AForm* unknown = intern.makeForm("unknown form", "target");
+    if (!unknown) {
+        std::cout << RED << "Intern couldn't create unknown form!" << RESET << std::endl;
+    } else {
+        delete unknown;
+    }
 
-        std::cout << YELLOW << "\n--- Press ENTER to continue ---" << RESET;
-        std::cin.get();
+    std::cout << YELLOW << "\n--- Press ENTER to continue ---" << RESET;
+    std::cin.get();
 
-        std::cout << BLUE << "\n--- Test 3: Low-level bureaucrat ---" << RESET << std::endl;
-        AForm* lowForm = intern.makeForm("shrubbery creation", "test");
-        if (lowForm) {
+    std::cout << BLUE << "\n--- Test 3: Low-level bureaucrat ---" << RESET << std::endl;
+    AForm* lowForm = intern.makeForm("shrubbery creation", "test");
+    if (lowForm) {
+        try {
             lowLevel.signForm(*lowForm);
             lowLevel.executeForm(*lowForm);
-            std::cout << RED << "Low-level bureaucrat could not execute the form if grade too low!" << RESET << std::endl;
-            delete lowForm;
+            std::cout << GREEN << "Low-level bureaucrat successfully signed and executed!" << RESET << std::endl;
+        } catch (const std::exception& e) {
+            std::cout << RED << "Low-level bureaucrat Error: " << e.what() << RESET << std::endl;
         }
-
-    } catch (const std::exception& e) {
-        std::cout << RED << "Error: " << e.what() << RESET << std::endl;
+        delete lowForm;
     }
 
     std::cout << BLUE << "\n=== END OF DEMONSTRATION ===" << RESET << std::endl;

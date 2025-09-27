@@ -40,7 +40,7 @@ void RobotomyRequestForm::execute(const Bureaucrat& executor) const {
 		throw GradeTooLowException();  // Bureaucrat grade too low to execute
 	
 	// 50% chance of success
-	std::srand(static_cast<unsigned int>(std::time(0)));  // Seed random number generator
+	std::srand((unsigned int)(std::time(0)));  // Seed random number generator
 	if (std::rand() % 2 == 0) {
 		std::cout << "Drilling noises... *BZZZZZZZZ*" << std::endl;
 		std::cout << _target << " has been successfully robotomized!" << std::endl;
