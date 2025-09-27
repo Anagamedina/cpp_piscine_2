@@ -192,14 +192,14 @@ graph TB
 
 ```mermaid
 flowchart TD
-    Start([🚀 makeForm called]) --> Input[📥 Receive formName and target]
+    Start("[🚀 makeForm called]") --> Input["📥 Receive formName and target"]
     Input --> Search[🔍 Search formNames array]
     Search --> CheckMatch{❓ Form name found?}
     
     CheckMatch -->|✅ Yes| GetIndex[📍 Get array index]
     CheckMatch -->|❌ No| UnknownForm[❌ Unknown form type]
     
-    GetIndex --> CallCreator[🎯 Call formCreators[index]]
+    GetIndex --> CallCreator["🎯 Call formCreators[index]"]
     CallCreator --> CreateForm[📄 Create specific form]
     
     CreateForm --> Shrubbery[🌳 ShrubberyCreationForm]
