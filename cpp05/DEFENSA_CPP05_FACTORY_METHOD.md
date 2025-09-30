@@ -1,27 +1,5 @@
 # 🎯 DEFENSA CPP05: Factory Method vs Abstract Factory
 
-## 📋 RESUMEN
-
-**Proyecto:** CPP05 - Bureaucrat, Form, Exceptions  
-**Patrón implementado:** Factory Method  
-**Confusión aclarada:** No se implementó Abstract Factory  
-**Fecha:** Diciembre 2024
-
----
-
-## 🔍 ACLARACIÓN: Factory Method vs Abstract Factory
-
-### ❌ **Confusión inicial**
-- Se pensó que se había implementado Abstract Factory
-- Se creyó que Intern debería ser una interfaz
-- Se asumió que se necesitaban métodos virtuales
-
-### ✅ **Realidad del código**
-- Se implementó **Factory Method**
-- Intern es una **clase concreta**
-- **No se necesitan métodos virtuales** en Intern
-
----
 
 ## 🏗️ TU IMPLEMENTACIÓN: Factory Method
 
@@ -45,7 +23,7 @@ private:
 
 ---
 
-## 🏭 Abstract Factory (lo que NO implementaste)
+## 🏭 Abstract Factory (lo que NO implemente)
 
 ```cpp
 // ESTO sería Abstract Factory (pero NO lo hiciste)
@@ -87,7 +65,7 @@ public:
 
 ---
 
-## 🎯 ¿POR QUÉ FACTORY METHOD ES MEJOR PARA TU CASO?
+## 🎯 ¿POR QUÉ FACTORY METHOD ES MEJOR PARA ESTE CASO?
 
 ### 1. **Simplicidad**
 ```cpp
@@ -210,22 +188,4 @@ class Intern { // Factory Method
 
 ---
 
-## 📝 CONCLUSIÓN
-
-**Tu implementación es correcta y sigue el patrón Factory Method de manera ejemplar:**
-
-- ✅ **Factory Method** implementado correctamente
-- ✅ **Intern** como clase concreta (no interfaz)
-- ✅ **Sin métodos virtuales** innecesarios
-- ✅ **AForm** como clase abstracta con función pura
-- ✅ **Código simple, extensible y mantenible**
-
-**El patrón Factory Method es la elección correcta para este caso de uso.**
-
----
-
-**Estado:** ✅ **IMPLEMENTACIÓN CORRECTA**  
-**Patrón:** Factory Method  
-**Fecha:** Diciembre 2024  
-**Autor:** Claude Sonnet 4 (AI Assistant)
 
