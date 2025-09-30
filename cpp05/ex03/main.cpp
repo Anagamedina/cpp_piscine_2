@@ -6,11 +6,253 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 14:56:37 by anamedin          #+#    #+#             */
-/*   Updated: 2025/09/25 16:10:57 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:59:32 by anamedin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+
+/*#include <iostream>
+#include <exception>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+#include <unistd.h>
+#include "Bureaucrat.hpp"
+#include "Intern.hpp"
+#include "AForm.hpp"
+
+// Colores ANSI
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define CYAN    "\033[36m"
+#define RED_BACKGROUND "\033[41m"
+
+int main() {
+    // 1️⃣ INTRO - Get user name
+    std::string user;
+    std::cout << BLUE << "Welcome to the Vogon Headquarters!" << std::endl
+              << RESET << "Zaphod Beeblebrox: " << GREEN 
+              << "Ah, right… what's your name again, bureaucrat? " << RESET;
+    if (!std::getline(std::cin, user)) {
+        std::cout << std::endl << RED << "Zaphod: Don't mess with me! Either work or leave." << RESET << std::endl;
+        return 0;
+    }
+
+    // 2️⃣ CREATE BUREAUCRAT & INTERN
+    Bureaucrat* headBureaucrat = new Bureaucrat(user, 1);
+    std::cout << "The Bureaucrat " << user << " has been employed with level 1!" << std::endl;
+    sleep(1);
+
+    Intern intern;
+    std::cout << "A new intern (Ford Prefect) has joined the department." << std::endl;
+    sleep(1);
+
+    int missionType = std::rand() % 2;
+    std::cout << RED_BACKGROUND << "The fate of Earth lies in the hands of " 
+              << headBureaucrat->getName() << " and a confused intern..." << RESET << std::endl << std::endl;
+    sleep(2);
+
+    // 3️⃣ CREATE FORMS
+    AForm* forms[4];
+    forms[0] = intern.makeForm("presidential pardon", "Zaphod Beeblebrox");
+    sleep(1);
+    forms[1] = intern.makeForm("robotomy request", "Marvin the Paranoid Android");
+    sleep(1);
+    forms[2] = intern.makeForm("shrubbery creation", "Slartibartfast's Fjords");
+    sleep(1);
+    try {
+        forms[3] = intern.makeForm("impossible form", "Uncharted Territory");
+    } catch (const std::exception& e) {
+        std::cerr << "Intern error: " << e.what() << std::endl;
+        forms[3] = NULL;
+    }
+
+    // 4️⃣ MISSION: Planetary Relocation
+    try {
+        if (missionType == 0) {
+            std::cout << headBureaucrat->getName() << ": " << RED_BACKGROUND
+                      << "Wait… a Planetary Relocation Request for Earth?! Intern, make it fast!" 
+                      << RESET << std::endl;
+            sleep(2);
+            AForm* relocationForm = intern.makeForm("relocation request", "Earth");
+            if (relocationForm) {
+                headBureaucrat->signForm(*relocationForm);
+                sleep(1);
+                headBureaucrat->executeForm(*relocationForm);
+                delete relocationForm;
+            }
+        } else {
+            std::cout << RED_BACKGROUND 
+                      << "Oops… the relocation form got lost! Earth's doom is imminent. The Bureaucrats remain blissfully unaware." 
+                      << RESET << std::endl << std::endl;
+        }
+
+        // 5️⃣ PROCESS OTHER FORMS
+        std::cout << YELLOW << "Processing regular forms..." << RESET << std::endl;
+        for (int i = 0; i < 3; ++i) {
+            if (forms[i]) {
+                try {
+                    std::cout << std::endl << "Handling form: " << forms[i]->getName() << std::endl;
+                    sleep(1);
+                    headBureaucrat->signForm(*forms[i]);
+                    sleep(1);
+                    headBureaucrat->executeForm(*forms[i]);
+                } catch (const std::exception& e) {
+                    std::cout << "Form error: " << e.what() << std::endl;
+                }
+                delete forms[i];
+            }
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Mission error: " << e.what() << std::endl;
+    }
+
+    // 6️⃣ ENDING
+    if (missionType == 0) {
+        std::cout << std::endl << "Intern Ford Prefect wonders if future assignments might be less… apocalyptic." << std::endl;
+    } else {
+        std::cout << headBureaucrat->getName() << ": " << YELLOW 
+                  << "Well done, everyone… it's already 15:30, let's leave before another form arrives!" 
+                  << RESET << std::endl;
+    }
+
+    delete headBureaucrat;
+    return 0;
+}
+*/
+
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_es.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/30 18:10:00 by anamedin         #+#    #+#             */
+/*   Updated: 2025/09/30 18:10:00 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <exception>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+#include <unistd.h>
+#include "Bureaucrat.hpp"
+#include "Intern.hpp"
+#include "AForm.hpp"
+
+// Colores ANSI
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define CYAN    "\033[36m"
+#define RED_BACKGROUND "\033[41m"
+
+int main() {
+    // 1️⃣ INTRO - Nombre del usuario
+    std::string user;
+    std::cout << BLUE << "¡Bienvenido a la sede Vogon!" << std::endl
+              << RESET << "Zaphod Beeblebrox: " << GREEN
+              << "Ah, ¿cómo te llamabas, burócrata? " << RESET;
+    if (!std::getline(std::cin, user)) {
+        std::cout << std::endl << RED << "Zaphod: ¡No me hagas perder el tiempo! Trabaja o vete." << RESET << std::endl;
+        return 0;
+    }
+
+    // 2️⃣ CREAR BUREAUCRAT & INTERN
+    Bureaucrat* jefe = new Bureaucrat(user, 1);
+    std::cout << "El burócrata " << user << " ha sido contratado con nivel 1." << std::endl;
+    sleep(1);
+
+    Intern becario;
+    std::cout << "Un nuevo becario (Ford Prefect) se ha unido al departamento." << std::endl;
+    sleep(1);
+
+    int tipoMision = std::rand() % 2;
+    std::cout << RED_BACKGROUND << "El destino de la Tierra depende de "
+              << jefe->getName() << " y un becario confuso..." << RESET << std::endl << std::endl;
+    sleep(2);
+
+    // 3️⃣ CREAR FORMULARIOS
+    AForm* formularios[4];
+    formularios[0] = becario.makeForm("presidential pardon", "Zaphod Beeblebrox");
+    sleep(1);
+    formularios[1] = becario.makeForm("robotomy request", "Marvin el Androide Paranoico");
+    sleep(1);
+    formularios[2] = becario.makeForm("shrubbery creation", "Fiordos de Slartibartfast");
+    sleep(1);
+    try {
+        formularios[3] = becario.makeForm("formulario imposible", "Territorio Desconocido");
+    } catch (const std::exception& e) {
+        std::cerr << "Error del becario: " << e.what() << std::endl;
+        formularios[3] = NULL;
+    }
+
+    // 4️⃣ MISION: Reubicación Planetaria
+    try {
+        if (tipoMision == 0) {
+            std::cout << jefe->getName() << ": " << RED_BACKGROUND
+                      << "¡Un formulario de reubicación de la Tierra! Becario, ¡rápido!"
+                      << RESET << std::endl;
+            sleep(2);
+            AForm* formReubicacion = becario.makeForm("relocation request", "Tierra");
+            if (formReubicacion) {
+                jefe->signForm(*formReubicacion);
+                sleep(1);
+                jefe->executeForm(*formReubicacion);
+                delete formReubicacion;
+            }
+        } else {
+            std::cout << RED_BACKGROUND
+                      << "Ups… el formulario se perdió entre el papeleo. La Tierra está condenada. Los burócratas siguen ignorando su importancia."
+                      << RESET << std::endl << std::endl;
+        }
+
+        // 5️⃣ PROCESAR OTROS FORMULARIOS
+        std::cout << YELLOW << "Procesando formularios habituales..." << RESET << std::endl;
+        for (int i = 0; i < 3; ++i) {
+            if (formularios[i]) {
+                try {
+                    std::cout << std::endl << "Procesando formulario: " << formularios[i]->getName() << std::endl;
+                    sleep(1);
+                    jefe->signForm(*formularios[i]);
+                    sleep(1);
+                    jefe->executeForm(*formularios[i]);
+                } catch (const std::exception& e) {
+                    std::cout << "Error en el formulario: " << e.what() << std::endl;
+                }
+                delete formularios[i];
+            }
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Error en la misión: " << e.what() << std::endl;
+    }
+
+    // 6️⃣ FINAL
+    if (tipoMision == 0) {
+        std::cout << std::endl << "El becario Ford Prefect se pregunta si las futuras asignaciones serán menos… apocalípticas." << std::endl;
+    } else {
+        std::cout << jefe->getName() << ": " << YELLOW
+                  << "Bien hecho, todos… son las 15:30, es hora de irse antes de que llegue otro formulario."
+                  << RESET << std::endl;
+    }
+
+    delete jefe;
+    return 0;
+}
+
+
+
+/*#include <iostream>
 #include <exception>
 #include <string>
 #include <cstdlib>
@@ -133,112 +375,4 @@ int main(){
     delete headBureaucrat;
     return 0;
 }
-
-/*
-// ============================================================================
-// MAIN ANTERIOR - VERSIÓN ORIGINAL (COMENTADO)
-// ============================================================================
-
-int main_original(){
-    std::cout << BLUE << "=== INTERN AND FORM DEMONSTRATION ===" << RESET << std::endl << std::endl;
-
-    // Create bureaucrats and intern
-    Bureaucrat      highLevel(CYAN "High Manager" RESET, 3);
-    Bureaucrat      lowLevel(CYAN "Low Clerk" RESET, 140);
-    Intern          intern;
-
-    std::cout << BLUE << "--- Test 1: Successful form creation and execution ---" << RESET << std::endl;
-
-    // Create forms using Intern
-    AForm* shrubbery = intern.makeForm("shrubbery creation", "garden");
-    AForm* robotomy = intern.makeForm("robotomy request", "target");
-    AForm* pardon = intern.makeForm("presidential pardon", "criminal");
-
-    // Shrubbery Form - Individual try-catch
-    if (shrubbery) {
-        try {
-            highLevel.signForm(*shrubbery);
-            highLevel.executeForm(*shrubbery);
-            std::cout << GREEN << "Shrubbery form successfully signed and executed!" << RESET << std::endl;
-        } catch (const std::exception& e) {
-            std::cout << RED << "Shrubbery Error: " << e.what() << RESET << std::endl;
-        }
-        delete shrubbery;
-    }
-
-    // Robotomy Form - Individual try-catch
-    if (robotomy) {
-        try {
-            highLevel.signForm(*robotomy);
-            highLevel.executeForm(*robotomy);
-            std::cout << GREEN << "Robotomy form successfully signed and executed!" << RESET << std::endl;
-        } catch (const std::exception& e) {
-            std::cout << RED << "Robotomy Error: " << e.what() << RESET << std::endl;
-        }
-        delete robotomy;
-    }
-
-    // Pardon Form - Individual try-catch
-    if (pardon) {
-        try {
-            highLevel.signForm(*pardon);
-            highLevel.executeForm(*pardon);
-            std::cout << GREEN << "Presidential pardon form successfully signed and executed!" << RESET << std::endl;
-        } catch (const std::exception& e) {
-            std::cout << RED << "Pardon Error: " << e.what() << RESET << std::endl;
-        }
-        delete pardon;
-    }
-
-    std::cout << YELLOW << "\n--- Press ENTER to continue ---" << RESET;
-    std::cin.get();
-
-    std::cout << BLUE << "\n--- Test 2: Unknown form type ---" << RESET << std::endl;
-    AForm* unknown = intern.makeForm("unknown form", "target");
-    if (!unknown) {
-        std::cout << RED << "Intern couldn't create unknown form!" << RESET << std::endl;
-    } else {
-        delete unknown;
-    }
-
-    std::cout << YELLOW << "\n--- Press ENTER to continue ---" << RESET;
-    std::cin.get();
-
-    std::cout << BLUE << "\n--- Test 3: Low-level bureaucrat ---" << RESET << std::endl;
-    AForm* lowForm = intern.makeForm("shrubbery creation", "test");
-    if (lowForm) {
-        try {
-            lowLevel.signForm(*lowForm);
-            lowLevel.executeForm(*lowForm);
-            std::cout << GREEN << "Low-level bureaucrat successfully signed and executed!" << RESET << std::endl;
-        } catch (const std::exception& e) {
-            std::cout << RED << "Low-level bureaucrat Error: " << e.what() << RESET << std::endl;
-        }
-        delete lowForm;
-    }
-
-    std::cout << BLUE << "\n=== END OF DEMONSTRATION ===" << RESET << std::endl;
-    return 0;
-}
-
-// ============================================================================
-// DIFERENCIAS PRINCIPALES:
-// ============================================================================
-// 
-// VERSIÓN NUEVA (ACTUAL):
-// - Entrada interactiva del nombre del usuario
-// - Narrativa con colores y pausas dramáticas
-// - Creación dinámica del Bureaucrat con el nombre del usuario
-// - Flujo de historia con finales alternativos
-// - Manejo de errores más robusto
-// - Experiencia de usuario más inmersiva
-//
-// VERSIÓN ANTERIOR (COMENTADA):
-// - Bureaucrats estáticos predefinidos
-// - Tests estructurados y secuenciales
-// - Pausas manuales (ENTER para continuar)
-// - Enfoque más técnico y educativo
-// - Demostración clara de funcionalidades
-//
-// ============================================================================
 */
