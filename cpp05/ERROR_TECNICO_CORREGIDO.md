@@ -19,11 +19,6 @@ void RobotomyRequestForm::execute(const Bureaucrat& executor) const {
 }
 ```
 
-### 3. **Comportamiento Esperado vs. Observado**
-- **Comportamiento esperado:** 50% éxito, 50% fallo
-- **Comportamiento observado:** El usuario vio fallos consecutivos
-- **Causa:** Mala suerte en las ejecuciones de prueba
-
 ---
 
 ## 🔧 PROBLEMAS REALES ENCONTRADOS Y CORREGIDOS
@@ -164,18 +159,4 @@ valgrind --leak-check=full ./form < /dev/null
 
 ---
 
-## 📝 CONCLUSIÓN
-
-**El "error" reportado era en realidad un malentendido sobre el comportamiento esperado del programa.** Sin embargo, el proceso de investigación reveló dos problemas reales que fueron corregidos:
-
-1. **Try-catch globales** que impedían la ejecución completa
-2. **Uso de static_cast** que podía causar problemas de compatibilidad
-
-Estas correcciones mejoraron significativamente la robustez y compatibilidad del código.
-
----
-
-**Estado Final:** ✅ **TODOS LOS PROBLEMAS RESUELTOS**  
-**Fecha de Resolución:** Diciembre 2024  
-**Autor del Análisis:** Claude Sonnet 4 (AI Assistant)
 
