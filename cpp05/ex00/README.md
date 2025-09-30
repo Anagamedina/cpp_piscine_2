@@ -139,81 +139,6 @@ catch (const std::exception& e) {  // Por referencia constante
 
 ---
 
-## ⚠️ REGLAS IMPORTANTES
-
-1. **No hay conversiones implícitas** en excepciones (excepto herencia)
-2. **El manejo es inmediato**: Una vez ejecutado `throw`, el resto del código en el mismo bloque se salta
-3. **Try y Catch van juntos**: No puedes usar uno sin el otro
-4. **Stack Unwinding**: Proceso automático de limpieza de memoria
-
----
-
-## 🔧 IMPLEMENTACIÓN PRÁCTICA
-
-### Crear tu propia excepción
-```cpp
-class MiExcepcion : public std::exception {
-private:
-    std::string mensaje;
-public:
-    explicit MiExcepcion(const std::string& msg) : mensaje(msg) {}
-    virtual const char* what() const noexcept override {
-        return mensaje.c_str();
-    }
-};
-```
-
-### Usar tu excepción
-```cpp
-void funcionPeligrosa() {
-    if (algo_malo) {
-        throw MiExcepcion("Algo salió mal!");
-    }
-}
-
-int main() {
-    try {
-        funcionPeligrosa();
-    }
-    catch (const MiExcepcion& e) {
-        std::cout << "Capturado: " << e.what() << std::endl;
-    }
-    return 0;
-}
-```
-
----
-
-## 🎯 RESUMEN TÉCNICO:
-
-> "C++ implementa excepciones con un modelo zero-cost: el compilador genera tablas de excepción y el runtime usa `__cxa_throw` para iniciar el unwinding. Durante el stack unwinding se invocan los destructores de los objetos automáticos, y si se encuentra un `catch` compatible según las tablas, el control se transfiere a él; de lo contrario se invoca `std::terminate()`."
-
----
-
-## 🚀 VENTAJAS Y DESVENTAJAS
-
-### ✅ Ventajas
-- Separación clara de código normal vs manejo de errores
-- Propagación automática de errores
-- Destrucción segura de objetos (RAII)
-- No afecta rendimiento en flujo normal
-
-### ❌ Desventajas
-- Costo alto cuando se lanza excepción
-- Puede ser difícil de debuggear
-- Requiere disciplina en el diseño
-
----
-
-## 💡 CONSEJOS PRÁCTICOS
-
-1. **Usa excepciones para errores excepcionales**, no para control de flujo normal
-2. **Captura por referencia constante** para objetos: `catch (const std::exception& e)`
-3. **Usa `noexcept`** cuando sepas que una función nunca lanza excepciones
-4. **Sigue RAII** para que los destructores hagan la limpieza automáticamente
-5. **Documenta qué excepciones puede lanzar** cada función
-
----
 
 ## 🔍 MANEJO DE ERRORES EN PROGRAMACIÓN
 
@@ -491,6 +416,83 @@ catch (const BaseExcepcion& e) {  // Sin slicing, mantiene toda la información
 ```
 
 ---
+
+## ⚠️ REGLAS IMPORTANTES
+
+1. **No hay conversiones implícitas** en excepciones (excepto herencia)
+2. **El manejo es inmediato**: Una vez ejecutado `throw`, el resto del código en el mismo bloque se salta
+3. **Try y Catch van juntos**: No puedes usar uno sin el otro
+4. **Stack Unwinding**: Proceso automático de limpieza de memoria
+
+---
+
+## 🔧 IMPLEMENTACIÓN PRÁCTICA
+
+### Crear tu propia excepción
+```cpp
+class MiExcepcion : public std::exception {
+private:
+    std::string mensaje;
+public:
+    explicit MiExcepcion(const std::string& msg) : mensaje(msg) {}
+    virtual const char* what() const noexcept override {
+        return mensaje.c_str();
+    }
+};
+```
+
+### Usar tu excepción
+```cpp
+void funcionPeligrosa() {
+    if (algo_malo) {
+        throw MiExcepcion("Algo salió mal!");
+    }
+}
+
+int main() {
+    try {
+        funcionPeligrosa();
+    }
+    catch (const MiExcepcion& e) {
+        std::cout << "Capturado: " << e.what() << std::endl;
+    }
+    return 0;
+}
+```
+
+---
+
+## 🎯 RESUMEN TÉCNICO:
+
+> "C++ implementa excepciones con un modelo zero-cost: el compilador genera tablas de excepción y el runtime usa `__cxa_throw` para iniciar el unwinding. Durante el stack unwinding se invocan los destructores de los objetos automáticos, y si se encuentra un `catch` compatible según las tablas, el control se transfiere a él; de lo contrario se invoca `std::terminate()`."
+
+---
+
+## 🚀 VENTAJAS Y DESVENTAJAS
+
+### ✅ Ventajas
+- Separación clara de código normal vs manejo de errores
+- Propagación automática de errores
+- Destrucción segura de objetos (RAII)
+- No afecta rendimiento en flujo normal
+
+### ❌ Desventajas
+- Costo alto cuando se lanza excepción
+- Puede ser difícil de debuggear
+- Requiere disciplina en el diseño
+
+---
+
+## 💡 CONSEJOS PRÁCTICOS
+
+1. **Usa excepciones para errores excepcionales**, no para control de flujo normal
+2. **Captura por referencia constante** para objetos: `catch (const std::exception& e)`
+3. **Usa `noexcept`** cuando sepas que una función nunca lanza excepciones
+4. **Sigue RAII** para que los destructores hagan la limpieza automáticamente
+5. **Documenta qué excepciones puede lanzar** cada función
+
+---
+
 
 ## 🎯 RESUMEN FINAL DE MEJORES PRÁCTICAS
 
