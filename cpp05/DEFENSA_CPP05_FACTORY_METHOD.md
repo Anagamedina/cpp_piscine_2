@@ -1,7 +1,7 @@
 # 🎯 DEFENSA CPP05: Factory Method vs Abstract Factory
 
 
-## 🏗️ TU IMPLEMENTACIÓN: Factory Method
+## 🏗️ IMPLEMENTACIÓN: Factory Method
 
 ```cpp
 class Intern { // Factory Method
