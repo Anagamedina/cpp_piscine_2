@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 17:30:18 by anamedin          #+#    #+#             */
-/*   Updated: 2025/10/02 18:47:10 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/10/09 18:47:10 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,270 +18,259 @@
 #include <cmath>
 #include <iomanip>
 #include <climits>
+#include <cerrno>
 
-/*
-### **PASO 1: Estructura básica**
-1. Crea `ScalarConverter.hpp` con:
-   - Include guards
-   - Includes necesarios (`iostream`, `string`)
-   - Clase con constructor/destructor/operador= privados
-   - Método estático `convert(const std::string& literal)`
+// ============================================================================
+// CONSTRUCTORES Y DESTRUCTOR (privados para que no se puedan crear instancias)
+// ============================================================================
 
-2. Crea `ScalarConverter.cpp` con:
-   - Include del header
-   - Includes adicionales que necesites
-   - Implementación vacía de `convert()`
+ScalarConverter::ScalarConverter() {}
 
-3. Crea `main.cpp` con:
-   - Verificación de argumentos (debe recibir exactamente 1 argumento)
-   - Llamada a `ScalarConverter::convert()`
+ScalarConverter::ScalarConverter(const ScalarConverter& other) { (void)other; }
 
-### **PASO 2: Pseudoliterales especiales**
-1. Identifica los 6 pseudoliterales:
-   - 3 para float: `"+inff"`, `"-inff"`, `"nanf"`
-   - 3 para double: `"+inf"`, `"-inf"`, `"nan"`
-
-2. Implementa la lógica para detectarlos y manejarlos por separado
-
-### **PASO 3: Detección de tipos normales**
-1. Implementa funciones para detectar:
-   - **Char**: longitud 1, printable, no dígito
-   - **Int**: solo dígitos (opcional +/- al inicio)
-   - **Float**: termina en 'f'
-   - **Double**: contiene punto decimal
-
-2. Orden de verificación: pseudoliterales → char → int → float → double
-
-### **PASO 4: Parsing con funciones C**
-1. Para **int**: usa `strtol()` y verifica rango `INT_MIN` a `INT_MAX`
-2. Para **float**: usa `strtod()` y verifica que termine en 'f'
-3. Para **double**: usa `strtod()` y verifica que se parseó completamente
-4. Para **char**: conversión directa
-
-### **PASO 5: Conversiones entre tipos**
-1. Una vez que tienes el tipo original, convierte a los otros 3:
-   - Usa `static_cast` para todas las conversiones
-   - Maneja casos especiales (NaN, infinito)
-
-### **PASO 6: Reglas de impresión**
-1. **Char**:
-   - `"impossible"` si NaN, infinito, o fuera de rango [0,255]
-   - `"Non displayable"` si no es printable (32-126)
-   - `"'X'"` si es printable
-
-2. **Int**:
-   - `"impossible"` si NaN, infinito, o fuera de rango
-   - El valor numérico si es válido
-
-3. **Float**:
-   - `"nanf"`, `"+inff"`, `"-inff"` para casos especiales
-   - Formato: valor + "f" (si es entero, añade ".0")
-
-4. **Double**:
-   - `"nan"`, `"+inf"`, `"-inf"` para casos especiales
-   - Formato: valor (si es entero, añade ".0")
-
-### **PASO 7: Casos edge**
-1. Maneja overflow en conversiones
-2. Maneja pérdida de precisión
-3. Maneja literales inválidos (imprime "impossible" para todos)
-
-### **PASO 8: Makefile**
-1. Configura para compilar con `-std=c++98`
-2. Incluye todos los archivos fuente
-3. Reglas: `all`, `clean`, `fclean`, `re`
-
-### **PASO 9: Pruebas**
-1. Casos básicos: `"A"`, `"42"`, `"3.14f"`, `"3.14159"`
-2. Pseudoliterales: `"nan"`, `"+inf"`, `"nanf"`
-3. Casos edge: `"300"`, `"0"`, `"abc"`
-
-## 🎯 **ORDEN DE IMPLEMENTACIÓN:**
-
-1. Estructura básica
-2. Pseudoliterales
-3. Detección de tipos
-4. Parsing
-5. Conversiones
-6. Impresión
-7. Casos edge
-8. Makefile
-9. Pruebas
-*/
-/*static bool isPrintableChar(int value)
-{
-    return (value >= 32 && value <= 126);
+ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other) {
+    (void)other;
+    return *this;
 }
 
-static bool isIntLiteral(const std::string &s)
-{
-    if (s.empty()) return false;
-    std::string::size_type i = 0;
-    if (s[i] == '+' || s[i] == '-') i++;
-    if (i >= s.size()) return false;
-    for (; i < s.size(); ++i) if (!std::isdigit(s[i])) return false;
+ScalarConverter::~ScalarConverter() {}
+
+// ============================================================================
+// FUNCIONES AUXILIARES DE IMPRESIÓN
+// ============================================================================
+
+// Imprime "impossible" para todos los tipos
+static void outputImpossibleForAll() {
+    std::cout << "char: impossible" << std::endl;
+    std::cout << "int: impossible" << std::endl;
+    std::cout << "float: impossible" << std::endl;
+    std::cout << "double: impossible" << std::endl;
+}
+
+// Imprime el CHAR a partir de un valor numérico
+static void displayCharType(double value) {
+    std::cout << "char: ";
+    
+    // Si es NaN o infinito → impossible
+    if (std::isnan(value) || std::isinf(value)) {
+        std::cout << "impossible" << std::endl;
+        return;
+    }
+    
+    // Si está fuera del rango de char (0-127 o 0-255) → impossible
+    if (value < 0 || value > 127) {
+        std::cout << "impossible" << std::endl;
+        return;
+    }
+    
+    // Si está en el rango pero no es imprimible (32-126) → Non displayable
+    char c = static_cast<char>(value);
+    if (value >= 32 && value <= 126)
+        std::cout << "'" << c << "'" << std::endl;
+    else
+        std::cout << "Non displayable" << std::endl;
+}
+
+// Imprime el INT a partir de un valor double
+static void displayIntType(double value) {
+    std::cout << "int: ";
+    
+    // Si es NaN, infinito o fuera de rango → impossible
+    if (std::isnan(value) || std::isinf(value) ||
+        value < std::numeric_limits<int>::min() ||
+        value > std::numeric_limits<int>::max()) {
+        std::cout << "impossible" << std::endl;
+        return;
+    }
+    
+    std::cout << static_cast<int>(value) << std::endl;
+}
+
+// Imprime el FLOAT con formato correcto
+static void displayFloatType(float value) {
+    std::cout << "float: ";
+    
+    if (std::isnan(value))
+        std::cout << "nanf" << std::endl;
+    else if (std::isinf(value))
+        std::cout << (value > 0 ? "+inff" : "-inff") << std::endl;
+    else
+        std::cout << std::fixed << std::setprecision(1) << value << "f" << std::endl;
+}
+
+// Imprime el DOUBLE con formato correcto
+static void displayDoubleType(double value) {
+    std::cout << "double: ";
+    
+    if (std::isnan(value))
+        std::cout << "nan" << std::endl;
+    else if (std::isinf(value))
+        std::cout << (value > 0 ? "+inf" : "-inf") << std::endl;
+    else
+        std::cout << std::fixed << std::setprecision(1) << value << std::endl;
+}
+
+// ============================================================================
+// FUNCIONES DE DETECCIÓN DE TIPO
+// ============================================================================
+
+// Detecta si es un CHAR (1 solo carácter imprimible que NO sea dígito)
+static bool checkIfChar(const std::string& literal) {
+    return (literal.length() == 1 && 
+            std::isprint(literal[0]) && 
+            !std::isdigit(literal[0]));
+}
+
+// Detecta si es un INT (solo dígitos, opcionalmente +/- al inicio)
+static bool checkIfInteger(const std::string& literal) {
+    if (literal.empty())
+        return false;
+    
+    size_t i = 0;
+    
+    // Saltar signo opcional
+    if (literal[i] == '+' || literal[i] == '-')
+        i++;
+    
+    // Debe haber al menos un dígito después del signo
+    if (i >= literal.length())
+        return false;
+    
+    // Todos los caracteres restantes deben ser dígitos
+    while (i < literal.length()) {
+        if (!std::isdigit(literal[i]))
+            return false;
+        i++;
+    }
+    
+    return true;
+}
+/*
+// Detecta si es un FLOAT (termina en 'f' o es un pseudoliteral float)
+static bool checkIfFloatType(const std::string& literal) {
+    // Pseudoliterales especiales de float
+    if (literal == "nanf" || literal == "+inff" || literal == "-inff")
+        return true;
+    
+    // Debe terminar en 'f' y tener al menos 2 caracteres
+    if (literal.length() < 2 || literal[literal.length() - 1] != 'f')
+        return false;
+    
     return true;
 }
 
-static bool isFloatLiteral(const std::string &s)
-{
-    if (s.size() < 2) return false;
-    if (s[s.size() - 1] != 'f') return false;
-    // Basic pattern check: must contain at least one digit or a dot before 'f'
-    bool hasDigit = false;
-    bool hasDot = false;
-    std::string::size_type i = 0;
-    if (s[i] == '+' || s[i] == '-') i++;
-    for (; i + 1 < s.size(); ++i) {
-        if (std::isdigit(s[i])) hasDigit = true;
-        else if (s[i] == '.') {
-            if (hasDot) return false;
-            hasDot = true;
-        } else return false;
-    }
-    return hasDigit || hasDot;
+// Detecta si es un DOUBLE (pseudoliterales o contiene punto decimal)
+static bool checkIfDoubleType(const std::string& literal) {
+    // Pseudoliterales especiales de double
+    if (literal == "nan" || literal == "+inf" || literal == "-inf")
+        return true;
+    
+    // Puede contener punto decimal
+    return (literal.find('.') != std::string::npos);
 }
+*/
+// ============================================================================
+// FUNCIÓN PRINCIPAL: CONVERT
+// ============================================================================
 
-static bool isDoubleLiteral(const std::string &s)
-{
-    // Must contain a dot or be a valid numeric without trailing 'f'
-    if (s.empty()) return false;
-    bool hasDigit = false;
-    bool hasDot = false;
-    std::string::size_type i = 0;
-    if (s[i] == '+' || s[i] == '-') i++;
-    if (i >= s.size()) return false;
-    for (; i < s.size(); ++i) {
-        if (std::isdigit(s[i])) hasDigit = true;
-        else if (s[i] == '.') {
-            if (hasDot) return false;
-            hasDot = true;
-        } else return false;
-    }
-    return hasDigit && hasDot;
-}
-
-void ScalarConverter::convert(const std::string &literal)
-{
-    char c = 0;
-    int i = 0;
-    float f = 0.0f;
-    double d = 0.0;
-
-    // Handle pseudo-literals first
-    if (literal == "+inff" || literal == "-inff" || literal == "nanf") {
-        if (literal[0] == '+') f = std::numeric_limits<float>::infinity();
-        else if (literal[0] == '-') f = -std::numeric_limits<float>::infinity();
-        else f = std::numeric_limits<float>::quiet_NaN();
-        d = static_cast<double>(f);
-
-        std::cout << "char: impossible" << std::endl;
-        std::cout << "int: impossible" << std::endl;
-        std::cout << "float: " << literal << std::endl;
-        std::cout << "double: " << (std::isnan(f) ? "nan" : (std::isinf(f) ? (f > 0 ? "+inf" : "-inf") : "")) << std::endl;
+/*void ScalarConverter::convert(const std::string& literal) {
+    
+    // ========== CASO 1: CHAR (un solo carácter no dígito) ==========
+    if (checkIfChar(literal)) {
+        char c = literal[0];
+        
+        displayCharType(static_cast<double>(c));
+        displayIntType(static_cast<double>(c));
+        displayFloatType(static_cast<float>(c));
+        displayDoubleType(static_cast<double>(c));
         return;
     }
-    if (literal == "nan" || literal == "+inf" || literal == "-inf") {
-        if (literal[0] == '+') d = std::numeric_limits<double>::infinity();
-        else if (literal[0] == '-') d = -std::numeric_limits<double>::infinity();
-        else d = std::numeric_limits<double>::quiet_NaN();
-        f = static_cast<float>(d);
-
-        std::cout << "char: impossible" << std::endl;
-        std::cout << "int: impossible" << std::endl;
-        std::cout << "float: " << (std::isnan(d) ? "nanf" : (std::isinf(d) ? (d > 0 ? "+inff" : "-inff") : "")) << std::endl;
-        std::cout << "double: " << literal << std::endl;
+    
+    // ========== CASO 2: INT (solo dígitos) ==========
+    if (checkIfInteger(literal)) {
+        char* end;
+        errno = 0;
+        long num = std::strtol(literal.c_str(), &end, 10);
+        
+        // Verificar si hay overflow o si no es válido
+        if (errno == ERANGE || *end != '\0' ||
+            num < std::numeric_limits<int>::min() ||
+            num > std::numeric_limits<int>::max()) {
+            outputImpossibleForAll();
+            return;
+        }
+        
+        int i = static_cast<int>(num);
+        displayCharType(static_cast<double>(i));
+        displayIntType(static_cast<double>(i));
+        displayFloatType(static_cast<float>(i));
+        displayDoubleType(static_cast<double>(i));
         return;
     }
-
-    // Single printable non-digit char
-    if (literal.size() == 1 && std::isprint(literal[0]) && !std::isdigit(literal[0])) {
-        c = literal[0];
-        i = static_cast<int>(c);
-        f = static_cast<float>(c);
-        d = static_cast<double>(c);
-    } else if (isIntLiteral(literal)) {
-        char *end = 0;
-        long v = std::strtol(literal.c_str(), &end, 10);
-        if (*end != '\0' || v < INT_MIN || v > INT_MAX) {
-            std::cout << "char: impossible" << std::endl;
-            std::cout << "int: impossible" << std::endl;
-            std::cout << "float: impossible" << std::endl;
-            std::cout << "double: impossible" << std::endl;
-            return;
+    
+    // ========== CASO 3: FLOAT (termina en 'f' o pseudoliterales) ==========
+    if (checkIfFloatType(literal)) {
+        float f;
+        
+        // Pseudoliterales especiales
+        if (literal == "nanf")
+            f = std::numeric_limits<float>::quiet_NaN();
+        else if (literal == "+inff")
+            f = std::numeric_limits<float>::infinity();
+        else if (literal == "-inff")
+            f = -std::numeric_limits<float>::infinity();
+        else {
+            // Quitar la 'f' del final y parsear
+            std::string numStr = literal.substr(0, literal.length() - 1);
+            char* end;
+            errno = 0;
+            double temp = std::strtod(numStr.c_str(), &end);
+            
+            if (errno == ERANGE || *end != '\0') {
+                outputImpossibleForAll();
+                return;
+            }
+            
+            f = static_cast<float>(temp);
         }
-        i = static_cast<int>(v);
-        c = static_cast<char>(i);
-        f = static_cast<float>(i);
-        d = static_cast<double>(i);
-    } else if (isFloatLiteral(literal)) {
-        char *end = 0;
-        f = static_cast<float>(std::strtod(literal.c_str(), &end));
-        if (!end || *end != 'f' || *(end + 1) != '\0') {
-            std::cout << "char: impossible" << std::endl;
-            std::cout << "int: impossible" << std::endl;
-            std::cout << "float: impossible" << std::endl;
-            std::cout << "double: impossible" << std::endl;
-            return;
-        }
-        d = static_cast<double>(f);
-        i = static_cast<int>(f);
-        c = static_cast<char>(i);
-    } else if (isDoubleLiteral(literal)) {
-        char *end = 0;
-        d = std::strtod(literal.c_str(), &end);
-        if (*end != '\0') {
-            std::cout << "char: impossible" << std::endl;
-            std::cout << "int: impossible" << std::endl;
-            std::cout << "float: impossible" << std::endl;
-            std::cout << "double: impossible" << std::endl;
-            return;
-        }
-        f = static_cast<float>(d);
-        i = static_cast<int>(d);
-        c = static_cast<char>(i);
-    } else {
-        std::cout << "char: impossible" << std::endl;
-        std::cout << "int: impossible" << std::endl;
-        std::cout << "float: impossible" << std::endl;
-        std::cout << "double: impossible" << std::endl;
+        
+        displayCharType(static_cast<double>(f));
+        displayIntType(static_cast<double>(f));
+        displayFloatType(f);
+        displayDoubleType(static_cast<double>(f));
         return;
     }
-
-    // char output
-    if (std::isnan(d) || std::isinf(d) || i < 0 || i > 255) {
-        std::cout << "char: impossible" << std::endl;
-    } else if (!isPrintableChar(i)) {
-        std::cout << "char: Non displayable" << std::endl;
-    } else {
-        std::cout << "char: '" << c << "'" << std::endl;
+    
+    // ========== CASO 4: DOUBLE (contiene punto o pseudoliterales) ==========
+    if (checkIfDoubleType(literal)) {
+        double d;
+        
+        // Pseudoliterales especiales
+        if (literal == "nan")
+            d = std::numeric_limits<double>::quiet_NaN();
+        else if (literal == "+inf")
+            d = std::numeric_limits<double>::infinity();
+        else if (literal == "-inf")
+            d = -std::numeric_limits<double>::infinity();
+        else {
+            // Parsear normalmente
+            char* end;
+            errno = 0;
+            d = std::strtod(literal.c_str(), &end);
+            
+            if (errno == ERANGE || *end != '\0') {
+                outputImpossibleForAll();
+                return;
+            }
+        }
+        
+        displayCharType(d);
+        displayIntType(d);
+        displayFloatType(static_cast<float>(d));
+        displayDoubleType(d);
+        return;
     }
-
-    // int output
-    if (std::isnan(d) || std::isinf(d) || d < static_cast<double>(INT_MIN) || d > static_cast<double>(INT_MAX)) {
-        std::cout << "int: impossible" << std::endl;
-    } else {
-        std::cout << "int: " << i << std::endl;
-    }
-
-    // float output
-    if (std::isnan(f)) {
-        std::cout << "float: nanf" << std::endl;
-    } else if (std::isinf(f)) {
-        std::cout << "float: " << (f > 0 ? "+inff" : "-inff") << std::endl;
-    } else {
-        std::cout << std::fixed << std::setprecision((f == static_cast<int>(f)) ? 1 : 6);
-        std::cout << "float: " << f << "f" << std::endl;
-    }
-
-    // double output
-    if (std::isnan(d)) {
-        std::cout << "double: nan" << std::endl;
-    } else if (std::isinf(d)) {
-        std::cout << "double: " << (d > 0 ? "+inf" : "-inf") << std::endl;
-    } else {
-        std::cout << std::fixed << std::setprecision((d == static_cast<int>(d)) ? 1 : 6);
-        std::cout << "double: " << d << std::endl;
-    }
-}
-	*/
+    
+    // ========== CASO 5: Input inválido ==========
+    outputImpossibleForAll();
+}*/
