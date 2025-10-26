@@ -38,6 +38,7 @@ void ShrubberyCreationForm::execute(const Bureaucrat& executor) const {
 	if (executor.getGrade() > getGradeToExecute())
 		throw GradeTooLowException();  // Bureaucrat grade too low to execute
 	
+	// Only execute if all validations pass
 	// Create file with ASCII tree art
 	std::ofstream file((_target + "_shrubbery").c_str());
 	if (file.is_open()) { 
@@ -55,6 +56,7 @@ void ShrubberyCreationForm::execute(const Bureaucrat& executor) const {
 		file << "       , -=-~  .-^- _\n";
 		file.close();	
 		std::cout << "Shrubbery has been planted in " << _target << "_shrubbery" << std::endl;
+		std::cout << "📁 FILE CREATED BY: " << executor.getName() << " (grade " << executor.getGrade() << ")" << std::endl;
 	}
 	else{
 		std::cerr << "Error: could not create shrubbery file." << std::endl;

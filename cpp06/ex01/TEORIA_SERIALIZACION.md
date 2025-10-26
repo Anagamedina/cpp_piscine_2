@@ -587,3 +587,21 @@ Después de dominar este ejercicio:
 
 ¡La serialización es fundamental para muchas aplicaciones avanzadas en C++!
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

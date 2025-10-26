@@ -353,27 +353,6 @@ IMPRIMIR CON LAS FUNCIONES display*Type():
 
 ---
 
-## 💡 TIPS PARA ENTENDER EL CÓDIGO
-
-1. **Lee primero las funciones de detección** (`checkIfChar`, `checkIfInteger`, etc.)
-   - Son simples y te ayudan a entender qué tipo de input esperas
-
-2. **Luego las funciones de impresión** (`displayCharType`, `displayIntType`, etc.)
-   - Manejan todos los casos especiales
-
-3. **Finalmente la función convert()**
-   - Coordina todo: detecta → parsea → convierte → imprime
-
-4. **Prueba el programa con diferentes inputs**
-   ```bash
-   ./scalar_converter A
-   ./scalar_converter 42
-   ./scalar_converter 3.14f
-   ./scalar_converter nan
-   ```
-
----
-
 ## 🚀 COMANDOS ÚTILES
 
 ```bash
@@ -399,6 +378,3 @@ make
 ```
 
 ---
-
-¡Ahora tienes una implementación sencilla y bien comentada! 🎉
-

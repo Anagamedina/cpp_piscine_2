@@ -261,5 +261,20 @@ make fclean
 make re
 ```
 
-¡Ahora entiendes cómo funciona la serialización de punteros! 🎉
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

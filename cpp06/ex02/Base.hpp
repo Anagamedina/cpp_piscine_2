@@ -14,17 +14,21 @@
 #define BASE_HPP
 
 /*
- * CLASE BASE
+ * BASE CLASS
  * 
- * Es una clase base polimórfica (tiene destructor virtual)
- * Esto es NECESARIO para que dynamic_cast funcione
+ * Polymorphic base class (has virtual destructor)
+ * This is NECESSARY for dynamic_cast to work
  * 
- * Las clases A, B y C heredarán de Base
+ * Classes A, B and C will inherit from Base
  */
 class Base {
     public:
-        virtual ~Base();  // Destructor virtual (hace la clase polimórfica)
+        virtual ~Base();  // Virtual destructor (makes class polymorphic)
 };
 
 #endif // BASE_HPP
+
+
+
+
 

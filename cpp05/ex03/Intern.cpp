@@ -20,7 +20,7 @@
 Intern::Intern(){}
 
 Intern::Intern(const Intern& copy){
-	*this = copy;
+	(void)copy;  // Intern no tiene atributos que copiar
 }
 
 Intern& Intern::operator=(const Intern& obj) { 
@@ -54,9 +54,8 @@ AForm* Intern::makeForm(const std::string& formName, const std::string& target){
 		} 
 	}
 	
-	// Form name not found
-	std::cout << "Intern couldn't create form: " << formName << " (unknown form type)" << std::endl;
-	return NULL;
+	// Form name not found - throw custom exception
+	throw FormNotFoundException();
 }
 
 // Static form creator functions
@@ -70,6 +69,11 @@ AForm* Intern::createRobotomyForm(const std::string& target){
 
 AForm* Intern::createPresidentialForm(const std::string& target){
 	return new PresidentialPardonForm(target);
+}
+
+// Exception implementation
+const char* Intern::FormNotFoundException::what() const throw() {
+	return "Form name not found - unknown form type";
 }
 
 

@@ -13,7 +13,7 @@
 #include "Form.hpp"
 
 // Constructors 
-Form::Form() : _name("Default"), _Signed(false), _gradeToSign(42), _gradeToExecute(42){}
+Form::Form() : _name("Default"), _Signed(false), _gradeToSign(42), _gradeToExecute(42){}	// Default values
 
 Form::Form(const std::string name, int gradetosign, int gradetoexecute) :  _name(name), _Signed(false), _gradeToSign(gradetosign), _gradeToExecute(gradetoexecute) { 
 	if (_gradeToSign < 1 || _gradeToExecute < 1)
@@ -22,55 +22,51 @@ Form::Form(const std::string name, int gradetosign, int gradetoexecute) :  _name
 		throw GradeTooLowException();   // Grade 150 is lowest
 }
 
-Form::Form(const Form& obj): _name(obj._name), _Signed(obj._Signed), _gradeToSign(obj._gradeToSign), _gradeToExecute(obj._gradeToExecute){
-}
+Form::Form(const Form& obj): _name(obj._name), _Signed(obj._Signed), _gradeToSign(obj._gradeToSign), _gradeToExecute(obj._gradeToExecute){}	// Copy constructor
 
 Form& Form::operator=(const Form& obj){
-	if (this != &obj){
-		_Signed = obj._Signed;
+	if (this != &obj){					// Self-assignment check
+		_Signed = obj._Signed;			// Only copy sign status (others are const)
 	}
 	return *this;
 }
 // Destructor
-Form::~Form(){}
-
+Form::~Form(){}						// Default destructor
 
 // Getters
 const std::string& Form::getName() const { 
-	return _name;
+	return _name;					// Return form name
 }
 
 bool Form::getSigned() const {
-	return _Signed;
+	return _Signed;					// Return sign status
 }
 
 int Form::getGradeToSign() const {
-	return _gradeToSign;
+	return _gradeToSign;			// Return required grade to sign
 }
 
 int Form::getGradeToExecute() const { 
-	return _gradeToExecute;
+	return _gradeToExecute;			// Return required grade to execute
 }
-
 
 // Sign form if bureaucrat grade is sufficient
 void Form::beSigned(const Bureaucrat& b){
-	if (b.getGrade() <= _gradeToSign)
-		_Signed = true;
+	if (b.getGrade() <= _gradeToSign)	// Check if bureaucrat has sufficient grade
+		_Signed = true;					// Sign the form
 	else
-		throw GradeTooLowException();
+		throw GradeTooLowException();	// Throw exception if grade too low
 }
 
 const char* Form::GradeTooHighException::what() const throw(){
-	return "Grade is too High";
+	return "Grade is too High";		// Exception message
 }
 
 const char* Form::GradeTooLowException::what() const throw(){
-	return "Grade is too Low";
+	return "Grade is too Low";		// Exception message
 }
 
 // Output operator
-
 std::ostream& operator<<(std::ostream& out, const Form& obj) { 
 	out << "Form: " << obj.getName()
 		<< "\nSigned: " << (obj.getSigned() ? "Yes" : "No")

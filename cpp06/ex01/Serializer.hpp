@@ -13,27 +13,27 @@
 #ifndef SERIALIZER_HPP
 #define SERIALIZER_HPP
 
-// Estructura de datos para probar la serialización
+// Data structure to test serialization
 struct Data {
-    int numero;
-    char letra;
-    float decimal;
+    int numero;		// Integer field
+    char letra;		// Character field
+    float decimal;	// Float field
 };
 
 class Serializer {
     private:
-        // Constructores privados para que no se puedan crear instancias
-        Serializer();
-        Serializer(const Serializer& other);
-        Serializer& operator=(const Serializer& other);
-        ~Serializer();
+        // Private constructors to prevent instantiation
+        Serializer();									// Private default constructor
+        Serializer(const Serializer& other);			// Private copy constructor
+        Serializer& operator=(const Serializer& other);	// Private assignment operator
+        ~Serializer();									// Private destructor
 
     public:
-        // Convierte un puntero Data* a un número entero (serializar)
-        // Usamos unsigned long que está disponible en C++98
+        // Convert Data* pointer to unsigned long (serialize)
+        // Using unsigned long which is available in C++98
         static unsigned long serialize(Data* ptr);
         
-        // Convierte un número entero de vuelta a puntero Data* (deserializar)
+        // Convert unsigned long back to Data* pointer (deserialize)
         static Data* deserialize(unsigned long raw);
 };
 

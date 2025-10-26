@@ -29,6 +29,12 @@ class Intern {
 		// Form creation method
 		AForm* makeForm(const std::string& formName, const std::string& target);
 
+		// Exceptions
+		class FormNotFoundException : public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
+
 	private:
 		// Static form creator functions
 		static AForm* createShrubberyForm(const std::string& target);

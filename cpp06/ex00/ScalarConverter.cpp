@@ -21,25 +21,25 @@
 #include <cerrno>
 
 // ============================================================================
-// CONSTRUCTORES Y DESTRUCTOR (privados para que no se puedan crear instancias)
+// CONSTRUCTORS AND DESTRUCTOR (private to prevent instantiation)
 // ============================================================================
 
-ScalarConverter::ScalarConverter() {}
+ScalarConverter::ScalarConverter() {}	// Private default constructor
 
-ScalarConverter::ScalarConverter(const ScalarConverter& other) { (void)other; }
+ScalarConverter::ScalarConverter(const ScalarConverter& other) { (void)other; }	// Private copy constructor
 
 ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other) {
-    (void)other;
+    (void)other;						// Suppress unused parameter warning
     return *this;
 }
 
-ScalarConverter::~ScalarConverter() {}
+ScalarConverter::~ScalarConverter() {}	// Private destructor
 
 // ============================================================================
-// FUNCIONES AUXILIARES DE IMPRESIÓN
+// HELPER FUNCTIONS FOR OUTPUT
 // ============================================================================
 
-// Imprime "impossible" para todos los tipos
+// Print "impossible" for all types
 static void outputImpossibleForAll() {
     std::cout << "char: impossible" << std::endl;
     std::cout << "int: impossible" << std::endl;
@@ -47,23 +47,23 @@ static void outputImpossibleForAll() {
     std::cout << "double: impossible" << std::endl;
 }
 
-// Imprime el CHAR a partir de un valor numérico
+// Print CHAR from numeric value
 static void displayCharType(double value) {
     std::cout << "char: ";
     
-    // Si es NaN o infinito → impossible
+    // If NaN or infinity → impossible
     if (std::isnan(value) || std::isinf(value)) {
         std::cout << "impossible" << std::endl;
         return;
     }
     
-    // Si está fuera del rango de char (0-127 o 0-255) → impossible
+    // If outside char range (0-127) → impossible
     if (value < 0 || value > 127) {
         std::cout << "impossible" << std::endl;
         return;
     }
     
-    // Si está en el rango pero no es imprimible (32-126) → Non displayable
+    // If in range but not printable (32-126) → Non displayable
     char c = static_cast<char>(value);
     if (value >= 32 && value <= 126)
         std::cout << "'" << c << "'" << std::endl;
@@ -71,11 +71,11 @@ static void displayCharType(double value) {
         std::cout << "Non displayable" << std::endl;
 }
 
-// Imprime el INT a partir de un valor double
+// Print INT from double value
 static void displayIntType(double value) {
     std::cout << "int: ";
     
-    // Si es NaN, infinito o fuera de rango → impossible
+    // If NaN, infinity or out of range → impossible
     if (std::isnan(value) || std::isinf(value) ||
         value < std::numeric_limits<int>::min() ||
         value > std::numeric_limits<int>::max()) {
@@ -86,7 +86,7 @@ static void displayIntType(double value) {
     std::cout << static_cast<int>(value) << std::endl;
 }
 
-// Imprime el FLOAT con formato correcto
+// Print FLOAT with correct format
 static void displayFloatType(float value) {
     std::cout << "float: ";
     
@@ -98,7 +98,7 @@ static void displayFloatType(float value) {
         std::cout << std::fixed << std::setprecision(1) << value << "f" << std::endl;
 }
 
-// Imprime el DOUBLE con formato correcto
+// Print DOUBLE with correct format
 static void displayDoubleType(double value) {
     std::cout << "double: ";
     
@@ -111,32 +111,32 @@ static void displayDoubleType(double value) {
 }
 
 // ============================================================================
-// FUNCIONES DE DETECCIÓN DE TIPO
+// TYPE DETECTION FUNCTIONS
 // ============================================================================
 
-// Detecta si es un CHAR (1 solo carácter imprimible que NO sea dígito)
+// Check if it's a CHAR (1 printable character that is NOT a digit)
 static bool checkIfChar(const std::string& literal) {
     return (literal.length() == 1 && 
             std::isprint(literal[0]) && 
             !std::isdigit(literal[0]));
 }
 
-// Detecta si es un INT (solo dígitos, opcionalmente +/- al inicio)
+// Check if it's an INT (only digits, optionally +/- at start)
 static bool checkIfInteger(const std::string& literal) {
     if (literal.empty())
         return false;
     
     size_t i = 0;
     
-    // Saltar signo opcional
+    // Skip optional sign
     if (literal[i] == '+' || literal[i] == '-')
         i++;
     
-    // Debe haber al menos un dígito después del signo
+    // Must have at least one digit after sign
     if (i >= literal.length())
         return false;
     
-    // Todos los caracteres restantes deben ser dígitos
+    // All remaining characters must be digits
     while (i < literal.length()) {
         if (!std::isdigit(literal[i]))
             return false;
@@ -145,37 +145,37 @@ static bool checkIfInteger(const std::string& literal) {
     
     return true;
 }
-/*
-// Detecta si es un FLOAT (termina en 'f' o es un pseudoliteral float)
+
+// Check if it's a FLOAT (ends with 'f' or is float pseudoliteral)
 static bool checkIfFloatType(const std::string& literal) {
-    // Pseudoliterales especiales de float
+    // Special float pseudoliterals
     if (literal == "nanf" || literal == "+inff" || literal == "-inff")
         return true;
     
-    // Debe terminar en 'f' y tener al menos 2 caracteres
+    // Must end with 'f' and have at least 2 characters
     if (literal.length() < 2 || literal[literal.length() - 1] != 'f')
         return false;
     
     return true;
 }
 
-// Detecta si es un DOUBLE (pseudoliterales o contiene punto decimal)
+// Check if it's a DOUBLE (pseudoliterals or contains decimal point)
 static bool checkIfDoubleType(const std::string& literal) {
-    // Pseudoliterales especiales de double
+    // Special double pseudoliterals
     if (literal == "nan" || literal == "+inf" || literal == "-inf")
         return true;
     
-    // Puede contener punto decimal
+    // Can contain decimal point
     return (literal.find('.') != std::string::npos);
 }
-*/
+
 // ============================================================================
-// FUNCIÓN PRINCIPAL: CONVERT
+// MAIN FUNCTION: CONVERT
 // ============================================================================
 
-/*void ScalarConverter::convert(const std::string& literal) {
+void ScalarConverter::convert(const std::string& literal) {
     
-    // ========== CASO 1: CHAR (un solo carácter no dígito) ==========
+    // ========== CASE 1: CHAR (single non-digit character) ==========
     if (checkIfChar(literal)) {
         char c = literal[0];
         
@@ -186,13 +186,13 @@ static bool checkIfDoubleType(const std::string& literal) {
         return;
     }
     
-    // ========== CASO 2: INT (solo dígitos) ==========
+    // ========== CASE 2: INT (only digits) ==========
     if (checkIfInteger(literal)) {
         char* end;
         errno = 0;
         long num = std::strtol(literal.c_str(), &end, 10);
         
-        // Verificar si hay overflow o si no es válido
+        // Check for overflow or invalid input
         if (errno == ERANGE || *end != '\0' ||
             num < std::numeric_limits<int>::min() ||
             num > std::numeric_limits<int>::max()) {
@@ -208,11 +208,11 @@ static bool checkIfDoubleType(const std::string& literal) {
         return;
     }
     
-    // ========== CASO 3: FLOAT (termina en 'f' o pseudoliterales) ==========
+    // ========== CASE 3: FLOAT (ends with 'f' or pseudoliterals) ==========
     if (checkIfFloatType(literal)) {
         float f;
         
-        // Pseudoliterales especiales
+        // Special pseudoliterals
         if (literal == "nanf")
             f = std::numeric_limits<float>::quiet_NaN();
         else if (literal == "+inff")
@@ -220,7 +220,7 @@ static bool checkIfDoubleType(const std::string& literal) {
         else if (literal == "-inff")
             f = -std::numeric_limits<float>::infinity();
         else {
-            // Quitar la 'f' del final y parsear
+            // Remove 'f' from end and parse
             std::string numStr = literal.substr(0, literal.length() - 1);
             char* end;
             errno = 0;
@@ -241,11 +241,11 @@ static bool checkIfDoubleType(const std::string& literal) {
         return;
     }
     
-    // ========== CASO 4: DOUBLE (contiene punto o pseudoliterales) ==========
+    // ========== CASE 4: DOUBLE (contains point or pseudoliterals) ==========
     if (checkIfDoubleType(literal)) {
         double d;
         
-        // Pseudoliterales especiales
+        // Special pseudoliterals
         if (literal == "nan")
             d = std::numeric_limits<double>::quiet_NaN();
         else if (literal == "+inf")
@@ -253,7 +253,7 @@ static bool checkIfDoubleType(const std::string& literal) {
         else if (literal == "-inf")
             d = -std::numeric_limits<double>::infinity();
         else {
-            // Parsear normalmente
+            // Parse normally
             char* end;
             errno = 0;
             d = std::strtod(literal.c_str(), &end);
@@ -271,6 +271,6 @@ static bool checkIfDoubleType(const std::string& literal) {
         return;
     }
     
-    // ========== CASO 5: Input inválido ==========
+    // ========== CASE 5: Invalid input ==========
     outputImpossibleForAll();
-}*/
+}

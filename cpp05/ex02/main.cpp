@@ -91,70 +91,80 @@ int main(){
 #define CYAN    "\033[36m"
 
 int main(){
-    std::cout << BLUE << "=== FORM AND BUREAUCRAT DEMONSTRATION ===" << RESET << std::endl << std::endl;
+    std::cout << BLUE << "=== FORM AND BUREAUCRAT DEMONSTRATION ===" << RESET << std::endl;
 
-    // Create bureaucrats once
-    Bureaucrat highLevel(CYAN "High Manager" RESET, 3);
-    Bureaucrat lowLevel(CYAN "Low Clerk" RESET, 140);
+    // Create bureaucrats
+    Bureaucrat highLevel("High Manager", 3);
+    Bureaucrat lowLevel("Low Clerk", 140);
+    
+    std::cout << CYAN << "Created bureaucrats:" << RESET << std::endl;
+    std::cout << highLevel << lowLevel << std::endl;
 
     std::cout << YELLOW << "\n--- Press ENTER to continue ---" << RESET;
-    std::cin.get();    
+    std::cin.get();
 
     // Create different forms
     ShrubberyCreationForm shrubbery("garden");
     RobotomyRequestForm robotomy("target");
     PresidentialPardonForm pardon("criminal");
-
+    
+    std::cout << CYAN << "Created forms:" << RESET << std::endl;
+    std::cout << shrubbery << robotomy << pardon << std::endl;
+    
     std::cout << YELLOW << "\n--- Press ENTER to continue ---" << RESET;
     std::cin.get();
 
-    // Shrubbery Form - Individual try-catch
-    std::cout << BLUE << "\n--- Testing Shrubbery Creation Form ---" << RESET << std::endl;
+    // Test 1: Shrubbery Form with high-level bureaucrat
+    std::cout << BLUE << "\n--- Test 1: Shrubbery Creation Form ---" << RESET << std::endl;
     try {
         highLevel.signForm(shrubbery);
+        std::cout << CYAN << "🌳 EXECUTING SHRUBBERY FORM:" << RESET << std::endl;
         highLevel.executeForm(shrubbery);
-        std::cout << GREEN << "Shrubbery Creation Form signed and executed successfully!" << RESET << std::endl;
+        std::cout << GREEN << "✅ Shrubbery Creation Form signed and executed successfully!" << RESET << std::endl;
     } catch (const std::exception& e) {
-        std::cout << RED << "Shrubbery Error: " << e.what() << RESET << std::endl;
+        std::cout << RED << "❌ Shrubbery Error: " << e.what() << RESET << std::endl;
     }
 
     std::cout << YELLOW << "\n--- Press ENTER to continue ---" << RESET;
     std::cin.get();
 
-    // Robotomy Form - Individual try-catch
-    std::cout << BLUE << "\n--- Testing Robotomy Request Form ---" << RESET << std::endl;
+    // Test 2: Robotomy Form with high-level bureaucrat
+    std::cout << BLUE << "\n--- Test 2: Robotomy Request Form ---" << RESET << std::endl;
     try {
         highLevel.signForm(robotomy);
+        std::cout << YELLOW << "🤖 EXECUTING ROBOTOMY FORM:" << RESET << std::endl;
         highLevel.executeForm(robotomy);
-        std::cout << GREEN << "Robotomy Request Form signed and executed successfully!" << RESET << std::endl;
+        std::cout << GREEN << "✅ Robotomy Request Form signed and executed successfully!" << RESET << std::endl;
     } catch (const std::exception& e) {
-        std::cout << RED << "Robotomy Error: " << e.what() << RESET << std::endl;
+        std::cout << RED << "❌ Robotomy Error: " << e.what() << RESET << std::endl;
     }
 
     std::cout << YELLOW << "\n--- Press ENTER to continue ---" << RESET;
     std::cin.get();
 
-    // Pardon Form - Individual try-catch
-    std::cout << BLUE << "\n--- Testing Presidential Pardon Form ---" << RESET << std::endl;
+    // Test 3: Presidential Pardon Form with high-level bureaucrat
+    std::cout << BLUE << "\n--- Test 3: Presidential Pardon Form ---" << RESET << std::endl;
     try {
         highLevel.signForm(pardon);
+        std::cout << GREEN << "🏛️ EXECUTING PRESIDENTIAL PARDON FORM:" << RESET << std::endl;
         highLevel.executeForm(pardon);
-        std::cout << GREEN << "Presidential Pardon Form signed and executed successfully!" << RESET << std::endl;
+        std::cout << GREEN << "✅ Presidential Pardon Form signed and executed successfully!" << RESET << std::endl;
     } catch (const std::exception& e) {
-        std::cout << RED << "Pardon Error: " << e.what() << RESET << std::endl;
+        std::cout << RED << "❌ Pardon Error: " << e.what() << RESET << std::endl;
     }
 
     std::cout << YELLOW << "\n--- Press ENTER to continue ---" << RESET;
     std::cin.get();
 
-    // Low-level bureaucrat test - Individual try-catch
-    std::cout << BLUE << "\n--- Testing with low-level bureaucrat ---" << RESET << std::endl;
+    // Test 4: Low-level bureaucrat (should fail)
+    std::cout << BLUE << "\n--- Test 4: Low-level bureaucrat (should fail) ---" << RESET << std::endl;
     try {
         lowLevel.signForm(shrubbery);
+        std::cout << CYAN << "🌳 EXECUTING SHRUBBERY FORM (Low-level bureaucrat):" << RESET << std::endl;
         lowLevel.executeForm(shrubbery);
-        std::cout << GREEN << "Low-level bureaucrat successfully signed and executed!" << RESET << std::endl;
+        std::cout << GREEN << "✅ Low-level bureaucrat successfully signed and executed!" << RESET << std::endl;
     } catch (const std::exception& e) {
-        std::cout << RED << "Low-level bureaucrat Error: " << e.what() << RESET << std::endl;
+        std::cout << RED << "❌ Low-level bureaucrat Error: " << e.what() << RESET << std::endl;
     }
 
     std::cout << BLUE << "\n=== END OF DEMONSTRATION ===" << RESET << std::endl;

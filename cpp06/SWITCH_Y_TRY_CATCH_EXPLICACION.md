@@ -819,3 +819,5 @@ Para entender mejor, intenta:
 
 ¡Espero que esta explicación te haya ayudado a entender cuándo y por qué usar switch y try-catch! 🚀
 
+
+

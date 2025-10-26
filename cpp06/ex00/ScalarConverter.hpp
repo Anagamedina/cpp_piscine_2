@@ -18,14 +18,13 @@
 
 class ScalarConverter {
 	private:
-		ScalarConverter();
-		ScalarConverter(const ScalarConverter& copy);
-        ScalarConverter& operator=(const ScalarConverter& obj);
-		~ScalarConverter();
+		ScalarConverter();									// Private default constructor
+		ScalarConverter(const ScalarConverter& copy);		// Private copy constructor
+        ScalarConverter& operator=(const ScalarConverter& obj);	// Private assignment operator
+		~ScalarConverter();									// Private destructor
 
 	public:
-        static void convert(const std::string& literal);
-
+        static void convert(const std::string& literal);	// Static method to convert string to scalar types
 
 };
 

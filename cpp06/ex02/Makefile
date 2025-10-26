@@ -1,68 +1,83 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/10/09 19:30:00 by anamedin          #+#    #+#              #
-#    Updated: 2025/10/09 19:30:00 by anamedin         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# ===========================
+# CONFIGURATION
+# ===========================
 
-NAME        = identify
-CXX         = c++
-CXXFLAGS    = -Wall -Wextra -Werror -std=c++98 -MMD -g
-RM          = rm -f
+# Executable name
+NAME = identify
+# Compiler
+CXX = c++
 
-# Directorios
-OBJDIR      = objs
-DEPDIR      = deps
+# Compilation flags
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -g #-fsanitize=address
 
-# Archivos fuente
-SRCS        = main.cpp Base.cpp A.cpp B.cpp C.cpp
-OBJS        = $(SRCS:%.cpp=$(OBJDIR)/%.o)
-DEPS        = $(SRCS:%.cpp=$(DEPDIR)/%.d)
+# Directories
+OBJ_DIR = objs/
+DEP_DIR = deps/
 
-# Colores
-GREEN       = \033[0;32m
-BLUE        = \033[0;34m
-RED         = \033[0;31m
-RESET       = \033[0m
+# Colors
+GREEN = \033[0;32m
+BLUE = \033[0;34m
+RED = \033[0;31m
+YELLOW = \033[0;33m
+PURPLE = \033[0;35m
+CYAN = \033[0;36m
+RESET = \033[0m
 
-# Regla principal
-all: $(NAME)
+# ===========================
+# SOURCES AND OBJECTS
+# ===========================
 
-# Compilar el ejecutable
-$(NAME): $(OBJS)
-	@$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
-	@echo "$(GREEN)✓ $(NAME) compilado correctamente$(RESET)"
+SRCS = main.cpp Base.cpp A.cpp B.cpp C.cpp
 
-# Compilar objetos
-$(OBJDIR)/%.o: %.cpp | $(OBJDIR) $(DEPDIR)
-	@$(CXX) $(CXXFLAGS) -c $< -o $@
-	@echo "$(BLUE)Compilando: $<$(RESET)"
+OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.cpp=.o))
+DEPS = $(addprefix $(DEP_DIR), $(SRCS:.cpp=.d))
 
-# Crear directorios
-$(OBJDIR) $(DEPDIR):
-	@mkdir -p $@
+# ===========================
+# RULES
+# ===========================
 
-# Limpiar objetos
-clean:
-	@$(RM) -r $(OBJDIR)/ $(DEPDIR)/
-	@echo "$(RED)✓ Objetos eliminados$(RESET)"
-
-# Limpiar todo
-fclean: clean
-	@$(RM) $(NAME)
-	@echo "$(RED)✓ $(NAME) eliminado$(RESET)"
-
-# Recompilar
-re: fclean all
-
-# Phony targets
 .PHONY: all clean fclean re
 
-# Incluir dependencias
+# Compile everything
+all: $(NAME)
+
+# Create executable
+$(NAME): $(OBJS)
+	@echo "$(BLUE)Linking $(NAME)...$(RESET)"
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
+	@echo "$(GREEN)✅ $(NAME) compiled successfully!$(RESET)"
+
+# Compile each .cpp to .o and generate dependencies
+# $(OBJ_DIR)/%.o: %.cpp Makefile
+objs/%.o: %.cpp Makefile
+	@mkdir -p $(OBJ_DIR) $(DEP_DIR)
+	@echo "$(YELLOW)📝 Compiling: $(CYAN)$<$(RESET)"
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+	@mv $(@:.o=.d) $(DEP_DIR)
+
+# Remove object files and dependencies
+clean:
+	@echo "$(PURPLE)🧹 Cleaning object files and dependencies...$(RESET)"
+	rm -rf $(OBJ_DIR) $(DEP_DIR)
+	@echo "$(GREEN)✅ Clean completed!$(RESET)"
+
+# Remove everything including executable
+fclean: clean
+	@echo "$(PURPLE)🧹 Removing executable...$(RESET)"
+	rm -f $(NAME)
+	@echo "$(GREEN)✅ Full clean completed!$(RESET)"
+
+# Recompile from scratch
+re: fclean all
+
+# Include dependencies automatically (headers are handled by -MMD)
 -include $(DEPS)
+
+
+
+
+
+
+
+
 

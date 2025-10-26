@@ -676,3 +676,21 @@ Después de dominar este ejercicio:
 
 ¡`dynamic_cast` es una herramienta poderosa para programación polimórfica segura!
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

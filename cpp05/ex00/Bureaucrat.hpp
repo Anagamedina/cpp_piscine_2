@@ -20,35 +20,35 @@
 class Bureaucrat{
 
   private:
-	const std::string	_name;
-	int					_grade; // Grade 1-150 (1=highest, 150=lowest)
+	const std::string	_name;		// Bureaucrat's name (immutable)
+	int					_grade;		// Grade 1-150 (1=highest, 150=lowest)
 
   public:
 	// Constructors
-	Bureaucrat();
-	Bureaucrat(const std::string name, int grade);
-	Bureaucrat(const Bureaucrat& obj);
-	Bureaucrat& operator=(const Bureaucrat& obj);
+	Bureaucrat();									// Default constructor
+	Bureaucrat(const std::string name, int grade);	// Parameterized constructor
+	Bureaucrat(const Bureaucrat& obj);				// Copy constructor
+	Bureaucrat& operator=(const Bureaucrat& obj);	// Assignment operator
 	// Destructor 
-	virtual	~Bureaucrat();
+	virtual	~Bureaucrat();							// Virtual destructor
 	
 	// Getters
-	const std::string& getName() const;
-	int getGrade() const;
+	const std::string& getName() const;			// Get bureaucrat's name
+	int getGrade() const;							// Get bureaucrat's grade
 
 	// Grade management (1=highest, 150=lowest)
-	void incrementGrade();
-	void decrementGrade();
+	void incrementGrade();							// Increase grade (better position)
+	void decrementGrade();							// Decrease grade (worse position)
 
 	// Exceptions
 	class GradeTooHighException : public std::exception{
 	  public:
-		virtual const char* what() const throw();
+		virtual const char* what() const throw();	// Exception message
 	};
 
 	class  GradeTooLowException : public std::exception { 
 	  public: 
-		virtual const char* what() const throw();
+		virtual const char* what() const throw();	// Exception message
 	};
 
 };

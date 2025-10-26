@@ -30,7 +30,7 @@ class Bureaucrat{
 	Bureaucrat(const Bureaucrat& obj);
 	Bureaucrat& operator=(const Bureaucrat& obj);
 	// Destructor 
-	virtual	~Bureaucrat();
+	~Bureaucrat();
 	
 	// Getters
 	const std::string& getName() const;
