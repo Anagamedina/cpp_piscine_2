@@ -4,6 +4,8 @@
 #include <deque>
 #include "easyfind.hpp"
 
+
+//VECTOR
 static void testVector() {
     std::vector<int> values;
     values.push_back(10);
@@ -25,6 +27,8 @@ static void testVector() {
     }
 }
 
+
+//LIST
 static void testListConst() {
     std::list<int> values;
     values.push_back(1);
@@ -46,7 +50,7 @@ static void testListConst() {
         std::cout << "List const: " << e.what() << std::endl;
     }
 }
-
+//DEQUE
 static void testDeque() {
     std::deque<int> values;
     values.push_back(7);
