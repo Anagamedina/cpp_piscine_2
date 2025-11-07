@@ -2,11 +2,12 @@
 #define MUTANTSTACK_HPP
 
 #include <stack>
-
-// MutantStack: std::stack que expone iteradores (C++98)
-// La idea clásica es usar el contenedor subyacente 'c' protegido en std::stack
-// y reenviar begin()/end() a c.begin()/c.end().
-
+/*
+    typedef typename std::deque<T>::const_iterator const_iterator;
+	typedef std::deque<T> tDeque;		//	 DEQUE
+	typedef typename tDeque::iterator iterator;	
+    
+    */
 template <typename T>
 class MutantStack : public std::stack<T> {
 public:
@@ -14,6 +15,8 @@ public:
     typedef typename Base::container_type container_type;
     typedef typename container_type::iterator iterator;
     typedef typename container_type::const_iterator const_iterator;
+
+    //reverse iterator
     typedef typename container_type::reverse_iterator reverse_iterator;
     typedef typename container_type::const_reverse_iterator const_reverse_iterator;
 
