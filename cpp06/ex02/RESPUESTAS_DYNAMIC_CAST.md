@@ -252,3 +252,7 @@ Base2* recovered = dynamic_cast<Base2*>(b2);
 ### 2️⃣ ¿Usa reinterpret_cast por dentro?
 **NO**. Usa RTTI (Run-Time Type Information) y consulta la vtable para verificar la jerarquía de herencia de forma segura.
 
+
+
+
+

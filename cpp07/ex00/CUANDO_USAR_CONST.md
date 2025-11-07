@@ -530,3 +530,7 @@ La regla simple: **Si no modificas, usa const** ✨
 
 
 
+
+
+
+

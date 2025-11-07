@@ -237,3 +237,7 @@ Array(Array const & other) : _elements(NULL), _size(other._size) {
 
 
 
+
+
+
+
